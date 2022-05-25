@@ -50,7 +50,8 @@ void insertarLibro(lista *list,char *titulo){
 }
 
 
-void menu() {
+void imprimirMenu() {
+	printf("Seleccione una opción con el indice[1, 2, 3...]");
 	printf("1. Agregar Libro");
 	printf("2. Editar libro");
 	printf("3. Eliminar libro");
@@ -63,5 +64,15 @@ void menu() {
 }
 
 int main() {
+	int m = 0;
+	lista inventario;//esta lista es importante ya que será la cabeza global, para enviarse como parametro a las funciones
+	while(m != 9){
+		imprimirMenu();
+		scanf("%i", m);
+		switch(m){
+			
+		}
+		
+	}
 	ingresaTexto();
 }
