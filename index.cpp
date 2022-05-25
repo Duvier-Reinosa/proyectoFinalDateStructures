@@ -7,6 +7,7 @@
 #define aactual 2022
 //señores, no dejen de estudiar listas... reflexionen sobre lo que les estan pidiendo
 typedef struct nodo{
+	int indice;
 	char titulo[20];
 	char autor[20];
 	char generoLiterario[20];
@@ -54,11 +55,12 @@ int validarFecha(int dia, int mes, int anio){//vallida fecha
 	return fecha_correcta;
 }
 
-void insertarLibro(lista *list,char *titulo,char *autor, char *generoLiterario, int nPaginas, char *editorial, char *idioma,int dia,int mes,int anio, char *estado, int precio, int cantidadDeEjemplares){
+void insertarLibro(lista *list,int indice,char *titulo,char *autor, char *generoLiterario, int nPaginas, char *editorial, char *idioma,int dia,int mes,int anio, char *estado, int precio, int cantidadDeEjemplares){
 //	Nota 1: No puede haber libros repetidos con el mismo estado(nuevo o usado).
 //	Nota 2: Las fechas deben estar validadas en el formato d�a/mes/a�o
 		lista nodo; //crea nodo para enlazar
 		nodo=(lista)malloc(sizeof(nodoL));// reserve memoria para ese nodo
+		nodo->indice,indice;
 		strcpy(nodo->titulo,titulo);
 		strcpy(nodo->autor,autor);
 		strcpy(nodo->generoLiterario,generoLiterario);
@@ -117,7 +119,109 @@ int validarcadena(char nombre[]){//isalpha !=0 es cadena, si no, es numero
 }
 
 
+void mostrarLibro(lista milista){
+	while (milista!=NULL)
+	{
+		printf("************************************************");
+		printf("\n");
+		printf("Indice: ");
+		printf("%d",milista->indice);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Titulo: ");
+		printf("%s",milista->titulo);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Genero literario: ");
+		printf("%s",milista->generoLiterario);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("numero de paginas: ");
+		printf("%d",milista->nPaginas);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Editorial: ");
+		printf("%s",milista->editorial);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Idioma: ");
+		printf("%s",milista->idioma);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Dia: ");
+		printf("%d",milista->dia);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Mes: ");
+		printf("%d",milista->mes);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Año: ");
+		printf("%d",milista->anio);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Precio: ");
+		printf("%d",milista->precio);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Cantidad: ");
+		printf("%d",milista->cantidadDeEjemplares);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Estado: ");
+		printf("%s",milista->estado);
+		printf("\n");
+		milista=milista->siguiente;
+	}
 
+	
+}
+
+int comprobarIndice(lista milista, int indice){
+	while(milista!=NULL){
+		if(milista->indice==indice){
+			return 1;
+		}
+	milista=milista->siguiente;
+	}
+	return 0;
+}
+
+int opcionDeEditar(lista milista, int mod){
+	if(mod==1){
+		return 1;
+	}else if(mod==2){
+		return 2;
+	}
+    return 0; 
+}
+int editarLibroCantidad(lista milista,int cantidad){
+	while(milista!=NULL){
+			milista->cantidadDeEjemplares=cantidad;
+			return 1;
+		milista=milista->siguiente;
+	}
+	return 0;
+}
+int editarLibroPrecio(lista milista,int cambiarprecio){
+	while(milista!=NULL){
+			milista->precio=cambiarprecio;
+			return 1;
+		milista=milista->siguiente;
+	}
+	return 0;
+}
 void imprimirMenu() {
 	printf("****************SISTEMA DE VENTA DE LIBROS**************\n\n");
 	printf("Seleccione una opci�n con el indice[1, 2, 3...]\n\n");
@@ -133,7 +237,8 @@ void imprimirMenu() {
 }
 
 int main() {
-	int m = 0, opcionglobal=0,nPaginas,precio,cantidadDeEjemplares,guardarnum,dia,mes,anio;
+	int indice=0,opcionglobal=0,mod,cantidad,cambiarprecio,indicelibro;
+	int m = 0,nPaginas,precio,cantidadDeEjemplares,guardarnum,dia,mes,anio;
 	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7];
 
 	lista inventario;//esta lista es importante ya que ser� la cabeza global, para enviarse como parametro a las funciones
@@ -248,7 +353,8 @@ int main() {
 						scanf("%s",&estado);
 						
 						if(comprobarEstado(inventario,estado)==0 && validarFecha(dia,mes,anio)==1){
-							insertarLibro(&inventario,titulo,autor,generoLiterario,nPaginas,editorial,idioma,dia,mes,anio,estado,precio,cantidadDeEjemplares);
+							indice++;
+							insertarLibro(&inventario,indice,titulo,autor,generoLiterario,nPaginas,editorial,idioma,dia,mes,anio,estado,precio,cantidadDeEjemplares);
 						}else{
 							printf("no se puede guardar el libro");
 						}
@@ -257,16 +363,54 @@ int main() {
 						printf("ingrese mas libros, con -1 termina...");
 						printf("\n");
 						printf("ingrese titulo del libro:");
+						fflush(stdin);
 						scanf("%s",&titulo);
 						guardarnum=atoi(titulo);
-						scanf("%d",&guardarnum);
+						fflush(stdin);
+							while(validarcadena(titulo)!=0 && guardarnum!=-1){
+								printf("ingrese titulo valido\n");
+								scanf("%s",&titulo);
+								guardarnum=atoi(titulo);
+								printf("\n");
+							}
+								if(validarcadena(titulo)==0){
+									printf("titulo valido...\n");
+								}
 
 					}
 
 			break;
-		}
+		case 2: system("cls");
+				mostrarLibro(inventario);
+				printf("seleccione el indice del libro que desea modificar ");
+				printf("\n");
+				scanf("%d",&indicelibro);
+				if(comprobarIndice(inventario,indicelibro)==1){
+					printf("Qué desea modificar: (1) cantidad de existencia (2)precio unitario");
+					printf("\n");
+					scanf("%d",&mod);
+					if(opcionDeEditar(inventario,mod)==1){
+							printf("ingrese nueva cantidad en inventario");
+							printf("\n");
+							scanf("%d",&cantidad);
+							if(editarLibroCantidad(inventario,cantidad)==1){
+								printf("cantidad actualizada");
+							}
+							
+					}else if(opcionDeEditar(inventario,mod)==2){
+							printf("ingrese nuevo precio unitario");
+							printf("\n");
+							scanf("%d",&cambiarprecio);
+							if(editarLibroPrecio(inventario,cambiarprecio)==1){
+								printf("precio actualizado");
+							}
+					} 							
+				}else{
+					printf("no existe el indice indicado");
+				}
+		break;
 		
 	}
 	ingresaTexto();
-
+	}
 }
