@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+//seÃ±ores, no dejen de estudiar listas... reflexionen sobre lo que les estan pidiendo
 typedef struct nodo{
 	char titulo[20];
 	char autor[20];
@@ -39,7 +39,7 @@ char ingresaTexto() {
 
 void insertarLibro(lista *list,char *titulo){
 //	Nota 1: No puede haber libros repetidos con el mismo estado(nuevo o usado).
-//	Nota 2: Las fechas deben estar validadas en el formato día/mes/año
+//	Nota 2: Las fechas deben estar validadas en el formato dï¿½a/mes/aï¿½o
 	lista nodo; //crea nodo para enlazar
 	nodo=(lista)malloc(sizeof(nodoL));// reserve memoria para ese nodo
 	strcpy(nodo->titulo,titulo);
@@ -51,7 +51,7 @@ void insertarLibro(lista *list,char *titulo){
 
 
 void imprimirMenu() {
-	printf("Seleccione una opción con el indice[1, 2, 3...]");
+	printf("Seleccione una opciï¿½n con el indice[1, 2, 3...]");
 	printf("1. Agregar Libro");
 	printf("2. Editar libro");
 	printf("3. Eliminar libro");
@@ -65,7 +65,7 @@ void imprimirMenu() {
 
 int main() {
 	int m = 0;
-	lista inventario;//esta lista es importante ya que será la cabeza global, para enviarse como parametro a las funciones
+	lista inventario;//esta lista es importante ya que serï¿½ la cabeza global, para enviarse como parametro a las funciones
 	while(m != 9){
 		imprimirMenu();
 		scanf("%i", m);
