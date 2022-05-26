@@ -17,37 +17,79 @@ typedef struct nodo{
 	int dia,mes,anio;
 	int precio;
 	int cantidadDeEjemplares;
-	char estado[7];
+	char estado[6];
 	struct nodo *siguiente;
 }nodoL;
 
 typedef nodoL *lista;
 
-int comprobarEstado(lista milista,char estado[]){//comprueba si ya hay un elemento con el estado nuevo o usado
+
+//funcion para validar si ya hay datos iguales
+//retorna 1 si: Todos los campos son iguales pero el estado es diferente o si todos los campos son diferentes y el estado es igual o diferente
+//retorna 0 si: Todos los campos son iguales incluido el estado
+int comprobarEstado(lista milista,char titulo[], char autor[], char generoLiterario[], int nPaginas, char editorial[], char idioma[], int dia, int mes, int anio,int precio,int cantidadDeEjemplares,char estado[]){
+	int bandera=0;
 	while(milista!=NULL){
-		if(strcmp(milista->estado,estado)==0){
-			return 1;
+		if(strcmp(milista->titulo,titulo)==0 && strcmp(milista->autor,autor)==0 && strcmp(milista->generoLiterario,generoLiterario)==0
+		 && milista->nPaginas==nPaginas && strcmp(milista->editorial,editorial)==0 && strcmp(milista->idioma,idioma)==0
+		  && milista->dia==dia && milista->mes==mes && milista->anio==anio && milista->precio==precio && milista->cantidadDeEjemplares==cantidadDeEjemplares
+		  	&& strcmp(milista->estado,estado)==0
+		  ){
+			  bandera=0;
+			  return bandera;
+		}else if(strcmp(milista->titulo,titulo)!=0 && strcmp(milista->autor,autor)!=0 && strcmp(milista->generoLiterario,generoLiterario)!=0
+		 		&& milista->nPaginas!=nPaginas && strcmp(milista->editorial,editorial)!=0 && strcmp(milista->idioma,idioma)!=0
+				  && milista->dia!=dia && milista->mes!=mes && milista->anio!=anio && milista->precio!=precio && milista->cantidadDeEjemplares!=cantidadDeEjemplares
+		 			 && strcmp(milista->estado,estado)==0 || strcmp(milista->estado,estado)!=0 ){
+						  bandera=1;
+						  return bandera;
+					  }
+		else if(strcmp(milista->titulo,titulo)==0 && strcmp(milista->autor,autor)==0 && strcmp(milista->generoLiterario,generoLiterario)==0
+				 && milista->nPaginas==nPaginas && strcmp(milista->editorial,editorial)==0 && strcmp(milista->idioma,idioma)==0
+		  			&& milista->dia==dia && milista->mes==mes && milista->anio==anio && milista->precio==precio && milista->cantidadDeEjemplares==cantidadDeEjemplares
+		  				&& strcmp(milista->estado,estado)!=0){
+							bandera=1;
+							return bandera;
 		}
 		milista=milista->siguiente;
 	}
-	return 0;
+	return bandera;
 }
 
 int validarFecha(int dia, int mes, int anio){//vallida fecha 
 	int fecha_correcta=0;
-	if(mes>=1 && mes<=12 && anio<=aactual){
+	if(mes>=1 && mes<=12 && dia>=1 && dia <=31 && anio<=aactual){//si el mes esta entre 1 y 12, y ademas, año no supera al actual
 		switch (mes)
 		{
-		case 2: if(anio % 4 ==0 && anio % 100 !=0 || anio%400 ==0){
-					if(dia>=1 && dia <=29)
+		case 1: fecha_correcta=1;
+		break;
+		case 2: if(anio % 4 ==0 && anio % 100 !=0 || anio%400 ==0){//caso de año bisiesto
+					if(dia>=1 && dia <=29)//si es bisiesto, febrero tendra 29 dias
 						fecha_correcta=1;
-				}else if(dia>=1 && dia<=28)
+				}else if(dia>=1 && dia<=28)//si no es bisiesto, febrero tendra 28 dias
 					fecha_correcta=1;
 		break;
-		case 11: if(dia>=1 && dia <=30)
+		case 3: fecha_correcta=1;
+		break;
+		case 4: fecha_correcta=1;
+		break;
+		break;
+		case 5: fecha_correcta=1;
+		break;
+		case 6: fecha_correcta=1;
+		break;
+		case 7: fecha_correcta=1;
+		break;
+		case 8: fecha_correcta=1;
+		break;
+		case 9: fecha_correcta=1;
+		break;
+		case 10: fecha_correcta=1;
+		break;
+		case 11: if(dia>=1 && dia <=30)//noviembre tiene 30 dias
 					fecha_correcta=1;
 		break;
-		case 12: if(dia>=1 && dia <=31)
+		case 12: if(dia>=1 && dia <=31)//diciembre tiene 31 dias
 					fecha_correcta=1;
 		break;
 		}
@@ -94,20 +136,20 @@ char ingresaTexto() {
 	
 	return *texto;
 }
-int validarnum(char numero[]){//isdigit !=0 es numero, si es 0 es cadena
-    int i=0,j,sw=0;
-    j=strlen(numero);
-    while(i<j && sw==0){
+int validarnum(char numero[]){//Valida si una cadena es numeroisdigit !=0 es numero, si es 0 es cadena
+    int i=0,tamanyo,bandera=0;
+    tamanyo=strlen(numero);
+    while(i<tamanyo && bandera==0){
         if(isdigit(numero[i])!=0){
             i++;
         }else{
-            sw=1;
+            bandera=1;
         }
     }
-    return sw;
+    return bandera;
 }
 
-int validarcadena(char nombre[]){//isalpha !=0 es cadena, si no, es numero
+int validarcadena(char nombre[]){//Valida si una cadena es cadena isalpha !=0 es cadena, si no, es numero
     int i = 0, tamanyio, bandera = 0;
     tamanyio = strlen(nombre);
     while(i < tamanyio && bandera == 0) {
@@ -121,7 +163,7 @@ int validarcadena(char nombre[]){//isalpha !=0 es cadena, si no, es numero
 }
 
 
-void mostrarLibroCompleto(lista milista){
+void mostrarLibroCompleto(lista milista){//muestra libro completo
 	while (milista!=NULL)
 	{
 		printf("************************************************");
@@ -193,9 +235,8 @@ void mostrarLibroCompleto(lista milista){
 		milista=milista->siguiente;
 	}
 
-	
 }
-void mostrarParteDeLibro(lista milista){
+void mostrarParteDeLibro(lista milista){//mostrar indice y titulo del libro para modificar libro
 	while (milista!=NULL)
 	{
 		printf("************************************************");
@@ -213,7 +254,7 @@ void mostrarParteDeLibro(lista milista){
 	}	
 }
 
-int comprobarIndice(lista milista, int indice){
+int comprobarIndice(lista milista, int indice){//si el indice coincide con el que el usuario ingresa 
 	while(milista!=NULL){
 		if(milista->indice==indice){
 			return 1;
@@ -223,7 +264,7 @@ int comprobarIndice(lista milista, int indice){
 	return 0;
 }
 
-int opcionDeEditar(lista milista, int mod){
+int opcionDeEditar(lista milista, int mod){//opcion para editar precio o cantidad
 	if(mod==1){
 		return 1;
 	}else if(mod==2){
@@ -231,7 +272,7 @@ int opcionDeEditar(lista milista, int mod){
 	}
     return 0; 
 }
-int editarLibroCantidad(lista milista,int cantidad){
+int editarLibroCantidad(lista milista,int cantidad){//modifica el campo cantidad de la estructura
 	while(milista!=NULL){
 			milista->cantidadDeEjemplares=cantidad;
 			return 1;
@@ -239,7 +280,7 @@ int editarLibroCantidad(lista milista,int cantidad){
 	}
 	return 0;
 }
-int editarLibroPrecio(lista milista,int cambiarprecio){
+int editarLibroPrecio(lista milista,int cambiarprecio){//modifique el campo precio de la estructura
 	while(milista!=NULL){
 			milista->precio=cambiarprecio;
 			return 1;
@@ -264,8 +305,9 @@ void imprimirMenu() {
 int main() {
 	int indice=0,opcionglobal=0,mod,cantidad,cambiarprecio,indicelibro;
 	int m = 0,nPaginas,precio,cantidadDeEjemplares,guardarnum=0,dia,mes,anio;
-	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7];
-
+	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[6];
+	char nuevo[]="nuevo";
+	char usado[]="usado";
 	lista inventario;//esta lista es importante ya que ser� la cabeza global, para enviarse como parametro a las funciones
 	while(m != 9){
 		system("cls");
@@ -287,7 +329,7 @@ int main() {
 					if(validarcadena(titulo)==0){
 						printf("titulo valido...\n");
 					}
-					
+					while(guardarnum!=-1){
 						printf("ingrese autor: ");
 						printf("\n");
 						fflush(stdin);
@@ -349,14 +391,29 @@ int main() {
 						printf("\n");
 						printf("ingrese mes de publicacion: ");
 						scanf("%d",&mes);
+						fflush(stdin);
 						printf("\n");
 						printf("ingrese año de publicacion: ");
 						scanf("%d",&anio);
+						fflush(stdin);
 						printf("\n");
-
-						if(validarFecha(dia,mes,anio)!=1){
-							printf("fecha incorrecta\n");
+						while(validarFecha(dia,mes,anio)==0){
+							printf("ingrese fecha valida: ");
+							printf("\n");
+							printf("ingrese dia de publicacion: ");
+							scanf("%d",&dia);
+							printf("\n");
+							printf("ingrese mes de publicacion: ");
+							scanf("%d",&mes);
+							printf("\n");
+							printf("ingrese año de publicacion: ");
+							scanf("%d",&anio);
+							printf("\n");
 						}
+						if(validarFecha(dia,mes,anio)==1){
+							printf("fecha correcta\n");
+						}
+
 						printf("\n");
 						printf("ingrese el precio del libro: ");
 						scanf("%d",&precio);
@@ -369,30 +426,33 @@ int main() {
 						
 						printf("ingrese estado del libro: 'nuevo' o 'usado' : ");
 						scanf("%s",&estado);
-//						
-//					if(comprobarEstado(inventario,estado)==0 && validarFecha(dia,mes,anio)==1){
+							
+							//while(strcmp(estado,nuevo)!=0)
+						
+
+						if(comprobarEstado(inventario,titulo,autor,generoLiterario,nPaginas,editorial,idioma,dia,mes,anio,precio,cantidadDeEjemplares,estado)==1){
 							indice++;
 							insertarLibro(&inventario,indice,titulo,autor,generoLiterario,nPaginas,editorial,idioma,dia,mes,anio,estado,precio,cantidadDeEjemplares);
-//						}else{
-//							printf("no se puede guardar el libro");
-//						}
-//
-//						printf("\n");
-//						printf("ingrese mas libros, con -1 termina...");
-//						printf("\n");
-//						printf("ingrese titulo del libro:");
-//						scanf("%s",&titulo);
-//						guardarnum=atoi(titulo);
-//							while(validarcadena(titulo)!=0 && guardarnum!=-1){
-//								printf("ingrese titulo valido\n");
-//								scanf("%s",&titulo);
-//								guardarnum=atoi(titulo);
-//								printf("\n");
-//							}
-//								if(validarcadena(titulo)==0){
-//									printf("titulo valido...\n");
-//								}
-//
+						}else{
+							printf("no se puede ingresar los datos");
+						}
+						system("cls");
+						printf("\n");
+						printf("ingrese mas libros, con -1 termina...");
+						printf("\n");
+						printf("ingrese titulo del libro:");
+						scanf("%s",&titulo);
+						guardarnum=atoi(titulo);
+							while(validarcadena(titulo)!=0 && guardarnum!=-1){
+								printf("ingrese titulo valido\n");
+								scanf("%s",&titulo);
+								guardarnum=atoi(titulo);
+								printf("\n");
+							}
+								if(validarcadena(titulo)==0){
+									printf("titulo valido...\n");
+								}
+					}
 			break;
 		case 2: system("cls");
 				mostrarParteDeLibro(inventario);
