@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define aactual 2022
-//señores, no dejen de estudiar listas... reflexionen sobre lo que les estan pidiendo
+//señores, no dejen de estudiar .. reflexionen sobre lo que les estan pidiendo
 typedef struct nodo{
 	int indice;
 	char titulo[20];
@@ -125,32 +125,38 @@ void mostrarLibro(lista milista){
 		printf("************************************************");
 		printf("\n");
 		printf("Indice: ");
-		printf("%d",milista->indice);
+		printf("%d",&milista->indice);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
 		printf("Titulo: ");
-		printf("%s",milista->titulo);
+		printf("%s",&milista->titulo);
+		printf("\n");
+		printf("************************************************");
+		printf("************************************************");
+		printf("\n");
+		printf("Autor: ");
+		printf("%s",&milista->autor);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
 		printf("Genero literario: ");
-		printf("%s",milista->generoLiterario);
+		printf("%s",&milista->generoLiterario);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
 		printf("numero de paginas: ");
-		printf("%d",milista->nPaginas);
+		printf("%d",&milista->nPaginas);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
 		printf("Editorial: ");
-		printf("%s",milista->editorial);
+		printf("%s",&milista->editorial);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
 		printf("Idioma: ");
-		printf("%s",milista->idioma);
+		printf("%s",&milista->idioma);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
@@ -238,7 +244,7 @@ void imprimirMenu() {
 
 int main() {
 	int indice=0,opcionglobal=0,mod,cantidad,cambiarprecio,indicelibro;
-	int m = 0,nPaginas,precio,cantidadDeEjemplares,guardarnum,dia,mes,anio;
+	int m = 0,nPaginas,precio,cantidadDeEjemplares,guardarnum=0,dia,mes,anio;
 	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7];
 
 	lista inventario;//esta lista es importante ya que ser� la cabeza global, para enviarse como parametro a las funciones
@@ -250,11 +256,9 @@ int main() {
 			case 1: system("cls");
 					printf("Ingrese libros a la lista, presione -1 para terminar: \n");
     				printf("ingrese titulo del libro:");
-					fflush(stdin);
 					scanf("%s",&titulo);
 					printf ("\n");
 					guardarnum=atoi(titulo);
-					fflush(stdin);
 					while(validarcadena(titulo)!=0 && guardarnum!=-1){
 						printf("ingrese titulo valido\n");
 						scanf("%s",&titulo);
@@ -264,7 +268,7 @@ int main() {
 					if(validarcadena(titulo)==0){
 						printf("titulo valido...\n");
 					}
-					while(guardarnum!=-1){
+					
 						printf("ingrese autor: ");
 						printf("\n");
 						fflush(stdin);
@@ -283,7 +287,6 @@ int main() {
 
 						printf("ingrese genero literario:");
 						scanf("%s",&generoLiterario);
-						fflush(stdin);
 						while(validarcadena(generoLiterario)!=0){
 							printf("ingrese un genero literario valido: ");
 							scanf("%s",&generoLiterario);
@@ -293,14 +296,11 @@ int main() {
 							printf("genero literario valido...");
 							printf("\n");
 						}
-							fflush(stdin);
 							printf("ingrese el numero de paginas:");
-							scanf("%d", &nPaginas);
+							scanf("%i", &nPaginas);
 
-						fflush(stdin);
 						printf("ingrese editorial:");
 						scanf("%s",&editorial);
-						fflush(stdin);
 						while(validarcadena(editorial)!=0){
 							printf("ingrese la editorial valida: ");
 							scanf("%s",&editorial);
@@ -311,74 +311,66 @@ int main() {
 							printf("\n");
 						}
 
-						fflush(stdin);
-						printf("ingrese idioma del libro:");
-						scanf("%s",&idioma);
-						fflush(stdin);
-						while(validarcadena(idioma)!=0){
-							printf("ingrese idioma valido: ");
-							scanf("%s",&idioma);
-							printf("\n");
-						}
-						if(validarcadena(idioma)==0){
-							printf("idioma valido...");
-							printf("\n");
-						}
-						fflush(stdin);
-						printf("ingrese dia de publicacion: ");
-						scanf("%d",&dia);
-						printf("\n");
-						printf("ingrese mes de publicacion: ");
-						scanf("%d",&mes);
-						printf("\n");
-						printf("ingrese año de publicacion: ");
-						scanf("%d",&anio);
-						printf("\n");
-
-						if(validarFecha(dia,mes,anio)!=1){
-							printf("fecha incorrecta\n");
-						}
-						printf("\n");
-						printf("ingrese el precio del libro: ");
-						scanf("%d",&precio);
-						printf("\n");
-
-						printf("\n");
-						printf("ingrese cantidad de libros: ");
-						scanf("%d",&cantidadDeEjemplares);
-						printf("\n");
-						
-						fflush(stdin);
-						printf("ingrese estado del libro: 'nuevo' o 'usado' : ");
-						scanf("%s",&estado);
-						
-						if(comprobarEstado(inventario,estado)==0 && validarFecha(dia,mes,anio)==1){
+//						printf("ingrese idioma del libro:");
+//						scanf("%s",&idioma);
+//						while(validarcadena(idioma)!=0){
+//							printf("ingrese idioma valido: ");
+//							scanf("%s",&idioma);
+//							printf("\n");
+//						}
+//						if(validarcadena(idioma)==0){
+//							printf("idioma valido...");
+//							printf("\n");
+//						}
+//						printf("ingrese dia de publicacion: ");
+//						scanf("%d",&dia);
+//						printf("\n");
+//						printf("ingrese mes de publicacion: ");
+//						scanf("%d",&mes);
+//						printf("\n");
+//						printf("ingrese año de publicacion: ");
+//						scanf("%d",&anio);
+//						printf("\n");
+//
+//						if(validarFecha(dia,mes,anio)!=1){
+//							printf("fecha incorrecta\n");
+//						}
+//						printf("\n");
+//						printf("ingrese el precio del libro: ");
+//						scanf("%d",&precio);
+//						printf("\n");
+//
+//						printf("\n");
+//						printf("ingrese cantidad de libros: ");
+//						scanf("%d",&cantidadDeEjemplares);
+//						printf("\n");
+//						
+//						printf("ingrese estado del libro: 'nuevo' o 'usado' : ");
+//						scanf("%s",&estado);
+//						
+//					if(comprobarEstado(inventario,estado)==0 && validarFecha(dia,mes,anio)==1){
 							indice++;
 							insertarLibro(&inventario,indice,titulo,autor,generoLiterario,nPaginas,editorial,idioma,dia,mes,anio,estado,precio,cantidadDeEjemplares);
-						}else{
-							printf("no se puede guardar el libro");
-						}
-
-						printf("\n");
-						printf("ingrese mas libros, con -1 termina...");
-						printf("\n");
-						printf("ingrese titulo del libro:");
-						fflush(stdin);
-						scanf("%s",&titulo);
-						guardarnum=atoi(titulo);
-						fflush(stdin);
-							while(validarcadena(titulo)!=0 && guardarnum!=-1){
-								printf("ingrese titulo valido\n");
-								scanf("%s",&titulo);
-								guardarnum=atoi(titulo);
-								printf("\n");
-							}
-								if(validarcadena(titulo)==0){
-									printf("titulo valido...\n");
-								}
-
-					}
-
+//						}else{
+//							printf("no se puede guardar el libro");
+//						}
+//
+//						printf("\n");
+//						printf("ingrese mas libros, con -1 termina...");
+//						printf("\n");
+//						printf("ingrese titulo del libro:");
+//						scanf("%s",&titulo);
+//						guardarnum=atoi(titulo);
+//							while(validarcadena(titulo)!=0 && guardarnum!=-1){
+//								printf("ingrese titulo valido\n");
+//								scanf("%s",&titulo);
+//								guardarnum=atoi(titulo);
+//								printf("\n");
+//							}
+//								if(validarcadena(titulo)==0){
+//									printf("titulo valido...\n");
+//								}
+//
 			break;
 		case 2: system("cls");
 				mostrarLibro(inventario);
@@ -411,6 +403,5 @@ int main() {
 		break;
 		
 	}
-	ingresaTexto();
 	}
 }
