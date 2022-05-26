@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <iostream>
 
 #define aactual 2022
 //señores, no dejen de estudiar .. reflexionen sobre lo que les estan pidiendo
@@ -328,7 +327,7 @@ int main() {
 					if(validarcadena(titulo)==0){
 						printf("titulo valido...\n");
 					}
-					//while(guardarnum!=-1){
+					while(guardarnum!=-1){
 						printf("ingrese autor: ");
 						printf("\n");
 						fflush(stdin);
@@ -435,23 +434,23 @@ int main() {
 						}else{
 							printf("no se puede ingresar los datos");
 						}
-//						system("cls");
-//						printf("\n");
-//						printf("ingrese mas libros, con -1 termina...");
-//						printf("\n");
-//						printf("ingrese titulo del libro:");
-//						scanf("%s",&titulo);
-//						guardarnum=atoi(titulo);
-//							while(validarcadena(titulo)!=0 && guardarnum!=-1){
-//								printf("ingrese titulo valido\n");
-//								scanf("%s",&titulo);
-//								guardarnum=atoi(titulo);
-//								printf("\n");
-//							}
-//								if(validarcadena(titulo)==0){
-//									printf("titulo valido...\n");
-//								}
-				//	}
+						system("cls");
+						printf("\n");
+						printf("ingrese mas libros, con -1 termina...");
+						printf("\n");
+						printf("ingrese titulo del libro:");
+						scanf("%s",&titulo);
+						guardarnum=atoi(titulo);
+							while(validarcadena(titulo)!=0 && guardarnum!=-1){
+								printf("ingrese titulo valido\n");
+								scanf("%s",&titulo);
+								guardarnum=atoi(titulo);
+								printf("\n");
+							}
+								if(validarcadena(titulo)==0){
+									printf("titulo valido...\n");
+								}
+					}
 			break;
 		case 2: system("cls");
 				mostrarParteDeLibro(inventario);
