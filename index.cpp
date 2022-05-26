@@ -106,16 +106,16 @@ int validarnum(char numero[]){//isdigit !=0 es numero, si es 0 es cadena
 }
 
 int validarcadena(char nombre[]){//isalpha !=0 es cadena, si no, es numero
-    int i=0,j,sw=0;
-    j=strlen(nombre);
-    while(i<j && sw==0){
-        if(isalpha(nombre[i])!=0){
+    int i = 0, tamanyio, bandera = 0;
+    tamanyio = strlen(nombre);
+    while(i < tamanyio && bandera == 0) {
+        if(isalpha(nombre[i]) != 0){
             i++;
         }else{
-            sw=1;
+            bandera = 1;
         }
     }
-    return sw;
+    return bandera;
 }
 
 
@@ -253,9 +253,9 @@ int main() {
 					fflush(stdin);
 					scanf("%s",&titulo);
 					printf ("\n");
-					guardarnum=atoi(titulo);
+					guardarnum=atoi(titulo);//convierte caracter a numero
 					fflush(stdin);
-					while(validarcadena(titulo)!=0 && guardarnum!=-1){
+					while(validarcadena(titulo) != 0 && guardarnum != -1){
 						printf("ingrese titulo valido\n");
 						scanf("%s",&titulo);
 						guardarnum=atoi(titulo);
