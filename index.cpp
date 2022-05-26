@@ -311,8 +311,8 @@ int main() {
 							printf("\n");
 						}
 
-//						printf("ingrese idioma del libro:");
-//						scanf("%s",&idioma);
+						printf("ingrese idioma del libro:");
+						scanf("%s",&idioma);
 //						while(validarcadena(idioma)!=0){
 //							printf("ingrese idioma valido: ");
 //							scanf("%s",&idioma);
