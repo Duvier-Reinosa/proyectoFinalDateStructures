@@ -64,13 +64,13 @@ void insertarLibro(lista *list,int indice,char *titulo,char *autor, char *genero
 		strcpy(nodo->titulo,titulo);
 		strcpy(nodo->autor,autor);
 		strcpy(nodo->generoLiterario,generoLiterario);
-		nodo->nPaginas,nPaginas;
+		nodo->nPaginas = nPaginas;
 		strcpy(nodo->editorial,editorial);
 		strcpy(nodo->idioma,idioma);
-		nodo->dia,dia;
-		nodo->mes,mes;
-		nodo->anio,anio;
-		nodo->cantidadDeEjemplares,cantidadDeEjemplares;
+		nodo->dia = dia;
+		nodo->mes = mes;
+		nodo->anio = anio;
+		nodo->cantidadDeEjemplares = cantidadDeEjemplares;
 		nodo->siguiente=*list; //apunta a la cabeza de la lista
 		*list=nodo; // milista recupera la cabeza
 }
@@ -313,48 +313,49 @@ int main() {
 
 						printf("ingrese idioma del libro:");
 						scanf("%s",&idioma);
-//						while(validarcadena(idioma)!=0){
-//							printf("ingrese idioma valido: ");
-//							scanf("%s",&idioma);
-//							printf("\n");
-//						}
-//						if(validarcadena(idioma)==0){
-//							printf("idioma valido...");
-//							printf("\n");
-//						}
-//						printf("ingrese dia de publicacion: ");
-//						scanf("%d",&dia);
-//						printf("\n");
-//						printf("ingrese mes de publicacion: ");
-//						scanf("%d",&mes);
-//						printf("\n");
-//						printf("ingrese año de publicacion: ");
-//						scanf("%d",&anio);
-//						printf("\n");
-//
-//						if(validarFecha(dia,mes,anio)!=1){
-//							printf("fecha incorrecta\n");
-//						}
-//						printf("\n");
-//						printf("ingrese el precio del libro: ");
-//						scanf("%d",&precio);
-//						printf("\n");
-//
-//						printf("\n");
-//						printf("ingrese cantidad de libros: ");
-//						scanf("%d",&cantidadDeEjemplares);
-//						printf("\n");
-//						
-//						printf("ingrese estado del libro: 'nuevo' o 'usado' : ");
-//						scanf("%s",&estado);
-//						
+						while(validarcadena(idioma)!=0){
+							printf("ingrese idioma valido: ");
+							scanf("%s",&idioma);
+							printf("\n");
+						}
+						if(validarcadena(idioma)==0){
+							printf("idioma valido...");
+							printf("\n");
+						}
+						printf("ingrese dia de publicacion: ");
+						scanf("%d",&dia);
+						printf("\n");
+						printf("ingrese mes de publicacion: ");
+						scanf("%d",&mes);
+						printf("\n");
+						printf("ingrese año de publicacion: ");
+						scanf("%d",&anio);
+						printf("\n");
+
+						if(validarFecha(dia,mes,anio)!=1){
+							printf("fecha incorrecta\n");
+						}
+						printf("\n");
+						printf("ingrese el precio del libro: ");
+						scanf("%d",&precio);
+						printf("\n");
+
+						printf("\n");
+						printf("ingrese cantidad de libros: ");
+						scanf("%d",&cantidadDeEjemplares);
+						printf("\n");
+						
+						printf("ingrese estado del libro: 'nuevo' o 'usado' : ");
+						scanf("%s",&estado);
+						
 //					if(comprobarEstado(inventario,estado)==0 && validarFecha(dia,mes,anio)==1){
 							indice++;
 							insertarLibro(&inventario,indice,titulo,autor,generoLiterario,nPaginas,editorial,idioma,dia,mes,anio,estado,precio,cantidadDeEjemplares);
-//						}else{
+//						}
+//						else{
 //							printf("no se puede guardar el libro");
 //						}
-//
+
 //						printf("\n");
 //						printf("ingrese mas libros, con -1 termina...");
 //						printf("\n");
