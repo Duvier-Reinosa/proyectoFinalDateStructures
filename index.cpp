@@ -60,16 +60,18 @@ void insertarLibro(lista *list,int indice,char *titulo,char *autor, char *genero
 //	Nota 2: Las fechas deben estar validadas en el formato d�a/mes/a�o
 		lista nodo; //crea nodo para enlazar
 		nodo=(lista)malloc(sizeof(nodoL));// reserve memoria para ese nodo
-		nodo->indice,indice;
+		nodo->indice=indice;
 		strcpy(nodo->titulo,titulo);
 		strcpy(nodo->autor,autor);
 		strcpy(nodo->generoLiterario,generoLiterario);
 		nodo->nPaginas = nPaginas;
 		strcpy(nodo->editorial,editorial);
 		strcpy(nodo->idioma,idioma);
+		strcpy(nodo->estado,estado);
 		nodo->dia = dia;
 		nodo->mes = mes;
 		nodo->anio = anio;
+		nodo->precio = precio;
 		nodo->cantidadDeEjemplares = cantidadDeEjemplares;
 		nodo->siguiente=*list; //apunta a la cabeza de la lista
 		*list=nodo; // milista recupera la cabeza
@@ -106,26 +108,26 @@ int validarnum(char numero[]){//isdigit !=0 es numero, si es 0 es cadena
 }
 
 int validarcadena(char nombre[]){//isalpha !=0 es cadena, si no, es numero
-    int i=0,j,sw=0;
-    j=strlen(nombre);
-    while(i<j && sw==0){
-        if(isalpha(nombre[i])!=0){
+    int i = 0, tamanyio, bandera = 0;
+    tamanyio = strlen(nombre);
+    while(i < tamanyio && bandera == 0) {
+        if(isalpha(nombre[i]) != 0){
             i++;
         }else{
-            sw=1;
+            bandera = 1;
         }
     }
-    return sw;
+    return bandera;
 }
 
 
-void mostrarLibro(lista milista){
+void mostrarLibroCompleto(lista milista){
 	while (milista!=NULL)
 	{
 		printf("************************************************");
 		printf("\n");
 		printf("Indice: ");
-		printf("%d",&milista->indice);
+		printf("%d",milista->indice);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
@@ -146,7 +148,7 @@ void mostrarLibro(lista milista){
 		printf("************************************************");
 		printf("\n");
 		printf("numero de paginas: ");
-		printf("%d",&milista->nPaginas);
+		printf("%d", milista->nPaginas);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
@@ -176,7 +178,7 @@ void mostrarLibro(lista milista){
 		printf("************************************************");
 		printf("\n");
 		printf("Precio: ");
-		printf("%d",milista->precio);
+		printf("%d", milista->precio);
 		printf("\n");
 		printf("************************************************");
 		printf("\n");
@@ -186,12 +188,29 @@ void mostrarLibro(lista milista){
 		printf("************************************************");
 		printf("\n");
 		printf("Estado: ");
-		printf("%s",milista->estado);
+		printf("%s", &milista->estado);
 		printf("\n");
 		milista=milista->siguiente;
 	}
 
 	
+}
+void mostrarParteDeLibro(lista milista){
+	while (milista!=NULL)
+	{
+		printf("************************************************");
+		printf("\n");
+		printf("Indice: ");
+		printf("%d",milista->indice);
+		printf("\n");
+		printf("************************************************");
+		printf("\n");
+		printf("Titulo: ");
+		printf("%s",&milista->titulo);
+		printf("\n");
+		printf("************************************************");
+		milista=milista->siguiente;
+	}	
 }
 
 int comprobarIndice(lista milista, int indice){
@@ -287,6 +306,7 @@ int main() {
 
 						printf("ingrese genero literario:");
 						scanf("%s",&generoLiterario);
+						fflush(stdin);
 						while(validarcadena(generoLiterario)!=0){
 							printf("ingrese un genero literario valido: ");
 							scanf("%s",&generoLiterario);
@@ -301,6 +321,7 @@ int main() {
 
 						printf("ingrese editorial:");
 						scanf("%s",&editorial);
+						fflush(stdin);
 						while(validarcadena(editorial)!=0){
 							printf("ingrese la editorial valida: ");
 							scanf("%s",&editorial);
@@ -313,6 +334,7 @@ int main() {
 
 						printf("ingrese idioma del libro:");
 						scanf("%s",&idioma);
+						fflush(stdin);
 						while(validarcadena(idioma)!=0){
 							printf("ingrese idioma valido: ");
 							scanf("%s",&idioma);
@@ -347,15 +369,14 @@ int main() {
 						
 						printf("ingrese estado del libro: 'nuevo' o 'usado' : ");
 						scanf("%s",&estado);
-						
+//						
 //					if(comprobarEstado(inventario,estado)==0 && validarFecha(dia,mes,anio)==1){
 							indice++;
 							insertarLibro(&inventario,indice,titulo,autor,generoLiterario,nPaginas,editorial,idioma,dia,mes,anio,estado,precio,cantidadDeEjemplares);
-//						}
-//						else{
+//						}else{
 //							printf("no se puede guardar el libro");
 //						}
-
+//
 //						printf("\n");
 //						printf("ingrese mas libros, con -1 termina...");
 //						printf("\n");
@@ -374,7 +395,7 @@ int main() {
 //
 			break;
 		case 2: system("cls");
-				mostrarLibro(inventario);
+				mostrarParteDeLibro(inventario);
 				printf("seleccione el indice del libro que desea modificar ");
 				printf("\n");
 				scanf("%d",&indicelibro);
@@ -399,7 +420,7 @@ int main() {
 							}
 					} 							
 				}else{
-					printf("no existe el indice indicado");
+					printf("no existe el libro indicado");
 				}
 		break;
 		
