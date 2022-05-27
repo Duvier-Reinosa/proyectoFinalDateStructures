@@ -22,6 +22,10 @@ typedef struct nodo{
 
 typedef nodoL *lista;
 
+int venderLibro(){
+	
+}
+
 
 //funcion para validar si ya hay datos iguales
 //retorna 1 si: Todos los campos son iguales pero el estado es diferente o si todos los campos son diferentes y el estado es igual o diferente
@@ -114,27 +118,12 @@ void insertarLibro(lista *list,int indice,char *titulo,char *autor, char *genero
 		nodo->anio = anio;
 		nodo->precio = precio;
 		nodo->cantidadDeEjemplares = cantidadDeEjemplares;
-		nodo->siguiente=*list; //apunta a la cabeza de la lista
-		*list=nodo; // milista recupera la cabeza
+		nodo->siguiente=*list; //apunta a la cabeza de la lista	
+		*list=nodo; // milista recupera la cabeza		
 }
 
 
-char ingresaTexto() {
-	char texto[20];
-	int flag = 0;
-	
-	while(flag != 1){
-		scanf("%s", texto);
-		if(strlen(texto) > 0){
-			flag = 1;
-		} else {
-			flag = 0;
-			printf("******Texto Invalido******");
-		}
-	}
-	
-	return *texto;
-}
+
 int validarnum(char numero[]){//Valida si una cadena es numeroisdigit !=0 es numero, si es 0 es cadena
     int i=0,tamanyo,bandera=0;
     tamanyo=strlen(numero);
@@ -236,21 +225,10 @@ void mostrarLibroCompleto(lista milista){//muestra libro completo
 
 }
 void mostrarParteDeLibro(lista milista){//mostrar indice y titulo del libro para modificar libro
-	while (milista!=NULL)
-	{
-		printf("************************************************");
-		printf("\n");
-		printf("Indice: ");
-		printf("%d",milista->indice);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Titulo: ");
-		printf("%s",&milista->titulo);
-		printf("\n");
-		printf("************************************************");
-		milista=milista->siguiente;
-	}	
+	while(milista != NULL){
+		printf("Indice: %d Titulo: %s\n", milista->indice, milista->titulo);
+		milista = milista->siguiente;
+	}
 }
 
 int comprobarIndice(lista milista, int indice){//si el indice coincide con el que el usuario ingresa 
@@ -289,7 +267,7 @@ int editarLibroPrecio(lista milista,int cambiarprecio){//modifique el campo prec
 }
 void imprimirMenu() {
 	printf("****************SISTEMA DE VENTA DE LIBROS**************\n\n");
-	printf("Seleccione una opci�n con el indice[1, 2, 3...]\n\n");
+	printf("Seleccione una opcion con el indice[1, 2, 3...]\n\n");
 	printf("1. Agregar Libro\n");
 	printf("2. Editar libro\n");
 	printf("3. Eliminar libro\n");
@@ -302,11 +280,12 @@ void imprimirMenu() {
 }
 
 int main() {
-	int indice=0,opcionglobal=0,mod,cantidad,cambiarprecio,indicelibro;
+	int indice=0,opcionglobal=0,indiceAModificar,cantidad,cambiarprecio,indicelibro;
 	int m = 0,nPaginas,precio,cantidadDeEjemplares,guardarnum=0,dia,mes,anio;
 	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7];
 	
 	lista inventario;//esta lista es importante ya que ser� la cabeza global, para enviarse como parametro a las funciones
+	inventario = NULL;//setea la cabeza
 	while(m != 9){
 		system("cls");
 		imprimirMenu();
@@ -456,13 +435,13 @@ int main() {
 				mostrarParteDeLibro(inventario);
 				printf("\n");
 				printf("seleccione el indice del libro que desea modificar ");
-				printf("\n");
+				fflush(stdin);
 				scanf("%d",&indicelibro);
 				if(comprobarIndice(inventario,indicelibro)==1){
-					printf("Qué desea modificar: (1) cantidad de existencia (2)precio unitario");
+					printf("Que desea modificar: (1) cantidad de existencia (2)precio unitario");
 					printf("\n");
-					scanf("%d",&mod);
-					if(opcionDeEditar(inventario,mod)==1){
+					scanf("%d",&indiceAModificar);
+					if(opcionDeEditar(inventario,indiceAModificar)==1){
 							printf("ingrese nueva cantidad en inventario");
 							printf("\n");
 							scanf("%d",&cantidad);
@@ -470,7 +449,7 @@ int main() {
 								printf("cantidad actualizada");
 							}
 							
-					}else if(opcionDeEditar(inventario,mod)==2){
+					}else if(opcionDeEditar(inventario,indiceAModificar)==2){
 							printf("ingrese nuevo precio unitario");
 							printf("\n");
 							scanf("%d",&cambiarprecio);
