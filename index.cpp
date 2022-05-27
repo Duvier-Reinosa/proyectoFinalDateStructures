@@ -158,73 +158,76 @@ int validarcadena(char nombre[]){//Valida si una cadena esta entre la a-z o A-Z
 
 
 void mostrarLibroCompleto(lista milista){//muestra libro completo
-	while (milista!=NULL)
-	{
-		printf("\n\n");
-		printf("\t\tIndice: ");
-		printf("%d",milista->indice);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Titulo: ");
-		printf("%s",milista->titulo);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Autor: ");
-		printf("%s",milista->autor);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Genero literario: ");
-		printf("%s",milista->generoLiterario);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("numero de paginas: ");
-		printf("%d", milista->nPaginas);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Editorial: ");
-		printf("%s",milista->editorial);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Idioma: ");
-		printf("%s",milista->idioma);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Dia: ");
-		printf("%d",milista->dia);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Mes: ");
-		printf("%d",milista->mes);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Año: ");
-		printf("%d",milista->anio);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Precio: ");
-		printf("%d", milista->precio);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Cantidad: ");
-		printf("%d",milista->cantidadDeEjemplares);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Estado: ");
-		printf("%s", milista->estado);
-		printf("\n");
-		milista=milista->siguiente;
+	if(milista==NULL){
+		printf("lista vacia");
+	}else{
+		while (milista!=NULL){
+			printf("\n\n");
+			printf("\t\tIndice: ");
+			printf("%d",milista->indice);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Titulo: ");
+			printf("%s",milista->titulo);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Autor: ");
+			printf("%s",milista->autor);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Genero literario: ");
+			printf("%s",milista->generoLiterario);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("numero de paginas: ");
+			printf("%d", milista->nPaginas);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Editorial: ");
+			printf("%s",milista->editorial);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Idioma: ");
+			printf("%s",milista->idioma);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Dia: ");
+			printf("%d",milista->dia);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Mes: ");
+			printf("%d",milista->mes);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Año: ");
+			printf("%d",milista->anio);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Precio: ");
+			printf("%d", milista->precio);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Cantidad: ");
+			printf("%d",milista->cantidadDeEjemplares);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Estado: ");
+			printf("%s", milista->estado);
+			printf("\n");
+			milista=milista->siguiente;
+		}
 	}
 
 }
@@ -242,6 +245,109 @@ void mostrarParteDeLibro(lista milista){//mostrar indice y titulo del libro para
 		printf("\n");
 		printf("************************************************");
 		milista=milista->siguiente;
+	}
+}
+void mostrarParaEliminar(lista milista){//mostrar indice y cantidad del libro para eliminar libro
+		while(milista != NULL){
+			if(milista->cantidadDeEjemplares==0){
+				printf("************************************************");
+				printf("\n\n");
+				printf("\t\tIndice: ");
+				printf("%d",milista->indice);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Titulo ");
+				printf("%s",milista->titulo);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Cantidad ");
+				printf("%d",milista->cantidadDeEjemplares);
+				printf("\n");
+				printf("************************************************");
+			}else{
+				printf("no hay ese libro");
+			}
+			milista=milista->siguiente;
+		}	
+}
+
+void buscarTitulo(lista milista,char buscarTitulo[]){//muestra libro por titulo
+	if(milista==NULL){
+		printf("lista vacia");
+	}else{
+		while (milista!=NULL){	
+			if(strcasecmp(milista->titulo,buscarTitulo)==0){
+				printf("Libro encontrado");
+				printf("\n\n");
+				printf("\t\tIndice: ");
+				printf("%d",milista->indice);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Titulo: ");
+				printf("%s",milista->titulo);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Autor: ");
+				printf("%s",milista->autor);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Genero literario: ");
+				printf("%s",milista->generoLiterario);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("numero de paginas: ");
+				printf("%d", milista->nPaginas);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Editorial: ");
+				printf("%s",milista->editorial);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Idioma: ");
+				printf("%s",milista->idioma);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Dia: ");
+				printf("%d",milista->dia);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Mes: ");
+				printf("%d",milista->mes);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Año: ");
+				printf("%d",milista->anio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Precio: ");
+				printf("%d", milista->precio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Cantidad: ");
+				printf("%d",milista->cantidadDeEjemplares);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Estado: ");
+				printf("%s", milista->estado);
+				printf("\n");
+				printf("************************************************");
+			}
+		milista=milista->siguiente;
+		}
 	}
 }
 
@@ -269,11 +375,61 @@ void editarLibroCantidad(lista milista,int cantidad,int indicelibro){//modifica 
 }
 void editarLibroPrecio(lista milista,int cambiarprecio,int indicelibro){//modifique el campo precio de la estructura
 	
-	if(comprobarIndice(milista,indicelibro)==1){
-	milista->precio=cambiarprecio;
+	while(milista!=NULL){
+		if(comprobarIndice(milista,indicelibro)==1){
+			milista->precio=cambiarprecio;
+			break;
+		}
+	milista=milista->siguiente;
 	}
 }
+
+int comprobarEliminar(lista milista){
+	while(milista!=NULL){
+		if(milista->cantidadDeEjemplares==0){
+			return milista->cantidadDeEjemplares;
+		}
+		milista=milista->siguiente;
+	}
+	return 0;
+}
+
+void eliminarLibro(lista *milista){//funcion para eliminar libro con existencia en 0
+	lista anterior=NULL;
+	lista primero=*milista;
+	lista actual=primero;
+	lista ultimo;
+	int encontrado=0;
+
+	if(primero!=NULL){
+		while(actual!=NULL && encontrado!=1){
+			if(actual->cantidadDeEjemplares==comprobarEliminar(*milista)){
+				if(actual==primero){
+					primero=primero->siguiente;
+				}else if(actual==ultimo){
+					anterior->siguiente=NULL;
+					ultimo=anterior;
+				}else{
+					anterior->siguiente=actual->siguiente;
+					}
+				printf("libro eliminado:");
+				encontrado=1;
+			}
+			anterior=actual;
+			actual=actual->siguiente;
+		}
+		if(encontrado==0){
+			printf("el libro no existe");
+		}else{
+			free(anterior);
+		}
+	}else{
+		printf("inventario vacio");
+	}
+	
+}
 void imprimirMenu() {
+	
 	printf("****************SISTEMA DE VENTA DE LIBROS**************\n\n");
 	printf("Seleccione una opcion con el indice[1, 2, 3...]\n\n");
 	printf("1. Agregar Libro\n");
@@ -288,9 +444,9 @@ void imprimirMenu() {
 }
 
 int main() {
-	int indice=0,opcionglobal=0,indiceAModificar,cambiarprecio,indicelibro;
+	int indice=0,indiceAModificar,cambiarprecio,indicelibro,indiceAEliminar,opcionBuscar;
 	int m = 0,guardarnum=0,npaginas=0,Dia,Mes,Anio,Precio=0,Cantidad=0,dia,mes,anio, cantidadEnInventario;
-	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7],nPaginas[20], precio[20], cantidad[20];
+	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7],nPaginas[20], precio[20], cantidad[20],buscartitulo[20];
 	
 	lista inventario;//esta lista es importante ya que ser� la cabeza global, para enviarse como parametro a las funciones
 	inventario = NULL;//setea la cabeza
@@ -303,14 +459,14 @@ int main() {
 					printf("Ingrese libros a la lista, presione -1 para terminar: \n");
     				printf("ingrese titulo del libro:");
     				fflush(stdin);
-					scanf("%[^\n]",titulo);
+					scanf("%[^\n]",&titulo);
 					fflush(stdin);
 					printf ("\n");
 					guardarnum=atoi(titulo);
 					while(validarcadena(titulo)!=0 && guardarnum!=-1){
 						printf("ingrese titulo valido\n");
 						fflush(stdin);
-						scanf("%[^\n]",titulo);
+						scanf("%[^\n]",&titulo);
 						fflush(stdin);
 						guardarnum=atoi(titulo);
 						printf("\n");
@@ -323,13 +479,13 @@ int main() {
 						printf("ingrese autor: ");
 						printf("\n");
 						fflush(stdin);
-						scanf("%[^\n]",autor);
+						scanf("%[^\n]",&autor);
 						fflush(stdin);
 						printf("\n");
 						while(validarcadena(autor)!=0){
 							printf("ingrese un nombre de autor valido: ");
 							fflush(stdin);
-							scanf("%[^\n]",autor);
+							scanf("%[^\n]",&autor);
 							fflush(stdin);
 							printf("\n");
 						}
@@ -340,12 +496,12 @@ int main() {
 
 						printf("ingrese genero literario:");
 						fflush(stdin);
-						scanf("%[^\n]",generoLiterario);
+						scanf("%[^\n]",&generoLiterario);
 						fflush(stdin);
 						while(validarcadena(generoLiterario)!=0){
 							printf("ingrese un genero literario valido: ");
 							fflush(stdin);
-							scanf("%[^\n]",generoLiterario);
+							scanf("%[^\n]",&generoLiterario);
 							fflush(stdin);
 							printf("\n");
 						}
@@ -371,12 +527,12 @@ int main() {
 						
 						printf("ingrese editorial:");
 						fflush(stdin);
-						scanf("%[^\n]",editorial);
+						scanf("%[^\n]",&editorial);
 						fflush(stdin);
 						while(validarcadena(editorial)!=0){
 							printf("ingrese la editorial valida: ");
 							fflush(stdin);
-							scanf("%[^\n]",editorial);
+							scanf("%[^\n]",&editorial);
 							fflush(stdin);
 							printf("\n");
 						}
@@ -387,12 +543,12 @@ int main() {
 
 						printf("ingrese idioma del libro:");
 						fflush(stdin);
-						scanf("%[^\n]",idioma);
+						scanf("%[^\n]",&idioma);
 						fflush(stdin);
 						while(validarcadena(idioma)!=0){
 							printf("ingrese idioma valido: ");
 							fflush(stdin);
-							scanf("%[^\n]",idioma);
+							scanf("%[^\n]",&idioma);
 							fflush(stdin);
 							printf("\n");
 						}
@@ -461,13 +617,13 @@ int main() {
 							
 					printf("ingrese estado del libro: 'nuevo' o 'usado' : ");
 						fflush(stdin);
-						scanf("%[^\n]",estado);
+						scanf("%[^\n]",&estado);
 						fflush(stdin);
 						while(validarcadena(estado)!=0){
 							printf("escriba solo 'nuevo' o 'usado' ");
 							printf("\n");
 							fflush(stdin);
-							scanf("%[^\n]",estado);
+							scanf("%[^\n]",&estado);
 							fflush(stdin);
 							printf("\n");
 						}
@@ -491,14 +647,14 @@ int main() {
 							printf("Ingrese libros a la lista, presione -1 para terminar: \n");
 		    				printf("ingrese titulo del libro:");
 		    				fflush(stdin);
-							scanf("%[^\n]",titulo);
+							scanf("%[^\n]",&titulo);
 							fflush(stdin);
 							printf ("\n");
 							guardarnum=atoi(titulo);
 							while(validarcadena(titulo)!=0 && guardarnum!=-1){
 								printf("ingrese titulo valido\n");
 								fflush(stdin);
-								scanf("%[^\n]",titulo);
+								scanf("%[^\n]",&titulo);
 								fflush(stdin);
 								guardarnum=atoi(titulo);
 								printf("\n");
@@ -535,8 +691,54 @@ int main() {
 				}
 		break;
 		
-		case 3: break;
+		case 3: system("cls");
+				mostrarParaEliminar(inventario);
+				if(inventario!=NULL){
+					printf("\n");
+					printf("(Solo se muestran los libros que se pueden eliminar)\n");
+					printf("Que libro desea eliminar? Ingrese el indice: ");
+					printf("\n");
+					scanf("%d",&indiceAEliminar);
+					if(comprobarIndice(inventario,indiceAEliminar)==1){
+						eliminarLibro(&inventario);				
+					}else{
+						printf("no existe el libro");
+					}
+				}else{
+					printf("lista vacia");
+				}
+		break;
 		
+		case 4: system("cls");
+				printf("Como desea  buscar?");
+				printf("\n");
+				printf("1. Buscar por titulo\n");
+				printf("2. Buscar por autor\n");
+				printf("3. Buscar por estado (nuevo o usado)\n");
+				printf("4. Buscar por rango de precios\n");	
+				printf("escriba 1,2,3 o 4");
+				printf("\n");
+				scanf("%d",&opcionBuscar);
+				switch(opcionBuscar){
+					case 1: system ("cls");
+							printf("ingrese el titulo que desea buscar: ");
+							scanf("%s",&buscartitulo);
+							fflush(stdin);
+							buscarTitulo(inventario,buscartitulo);		
+					break;
+				}
+				
+		break;
+		case 5: break;
+		case 6: break;
+		case 7: break;
+		case 8: break;
+		case 9: system("cls");
+				return 0;
+				break;
 	}
+			printf("\n");
+		  	printf("ingrese el numero 10 para volver al menu principal: ");
+  			scanf("%d",&m); 
 	}
 }
