@@ -232,19 +232,23 @@ void mostrarLibroCompleto(lista milista){//muestra libro completo
 
 }
 void mostrarParteDeLibro(lista milista){//mostrar indice y titulo del libro para modificar libro
-	while(milista != NULL){
-		printf("************************************************");
-		printf("\n\n");
-		printf("\t\tIndice: ");
-		printf("%d",milista->indice);
-		printf("\n");
-		printf("************************************************");
-		printf("\n");
-		printf("Titulo: ");
-		printf("%s",milista->titulo);
-		printf("\n");
-		printf("************************************************");
-		milista=milista->siguiente;
+	if(milista==NULL){
+		printf("lista vacia");
+	}else{
+		while(milista != NULL){
+			printf("************************************************");
+			printf("\n\n");
+			printf("\t\tIndice: ");
+			printf("%d",milista->indice);
+			printf("\n");
+			printf("************************************************");
+			printf("\n");
+			printf("Titulo: ");
+			printf("%s",milista->titulo);
+			printf("\n");
+			printf("************************************************");
+			milista=milista->siguiente;
+		}
 	}
 }
 void mostrarParaEliminar(lista milista){//mostrar indice y cantidad del libro para eliminar libro
@@ -274,9 +278,6 @@ void mostrarParaEliminar(lista milista){//mostrar indice y cantidad del libro pa
 }
 
 void buscarTitulo(lista milista,char buscarTitulo[]){//muestra libro por titulo
-	if(milista==NULL){
-		printf("lista vacia");
-	}else{
 		while (milista!=NULL){	
 			if(strcasecmp(milista->titulo,buscarTitulo)==0){
 				printf("Libro encontrado");
@@ -348,7 +349,226 @@ void buscarTitulo(lista milista,char buscarTitulo[]){//muestra libro por titulo
 			}
 		milista=milista->siguiente;
 		}
-	}
+}
+
+void buscarAutor(lista milista,char buscarAutor[]){//muestra libro por titulo
+		while (milista!=NULL){	
+			if(strcasecmp(milista->autor,buscarAutor)==0){
+				printf("Libro encontrado");
+				printf("\n\n");
+				printf("\t\tIndice: ");
+				printf("%d",milista->indice);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Autor ");
+				printf("%s",milista->autor);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Titulo ");
+				printf("%s",milista->titulo);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Genero literario: ");
+				printf("%s",milista->generoLiterario);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("numero de paginas: ");
+				printf("%d", milista->nPaginas);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Editorial: ");
+				printf("%s",milista->editorial);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Idioma: ");
+				printf("%s",milista->idioma);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Dia: ");
+				printf("%d",milista->dia);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Mes: ");
+				printf("%d",milista->mes);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Año: ");
+				printf("%d",milista->anio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Precio: ");
+				printf("%d", milista->precio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Cantidad: ");
+				printf("%d",milista->cantidadDeEjemplares);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Estado: ");
+				printf("%s", milista->estado);
+				printf("\n");
+				printf("************************************************");
+			}
+		milista=milista->siguiente;
+		}
+}
+
+void buscarEstado(lista milista,char buscarEstado[]){//muestra libro estdo (nuevo o usado)
+		while (milista!=NULL){	
+			if(strcasecmp(milista->estado,buscarEstado)==0){
+				printf("Libro encontrado");
+				printf("\n\n");
+				printf("\t\tIndice: ");
+				printf("%d",milista->indice);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Estado: ");
+				printf("%s", milista->estado);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Autor ");
+				printf("%s",milista->autor);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Titulo ");
+				printf("%s",milista->titulo);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Genero literario: ");
+				printf("%s",milista->generoLiterario);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("numero de paginas: ");
+				printf("%d", milista->nPaginas);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Editorial: ");
+				printf("%s",milista->editorial);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Idioma: ");
+				printf("%s",milista->idioma);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Dia: ");
+				printf("%d",milista->dia);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Mes: ");
+				printf("%d",milista->mes);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Año: ");
+				printf("%d",milista->anio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Precio: ");
+				printf("%d", milista->precio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Cantidad: ");
+				printf("%d",milista->cantidadDeEjemplares);
+				printf("\n");
+			}
+		milista=milista->siguiente;
+		}
+}
+
+void buscarPrecio(lista milista,int buscarPrecioDesde,int buscarPrecioHasta){//muestra libro por rango de precios
+		while (milista!=NULL){	
+			if(milista->precio>=buscarPrecioDesde && milista->precio<=buscarPrecioHasta){
+				printf("Libro encontrado");
+				printf("\n\n");
+				printf("\t\tIndice: ");
+				printf("%d",milista->indice);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Precio: ");
+				printf("%d", milista->precio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Autor ");
+				printf("%s",milista->autor);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Titulo ");
+				printf("%s",milista->titulo);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Genero literario: ");
+				printf("%s",milista->generoLiterario);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("numero de paginas: ");
+				printf("%d", milista->nPaginas);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Editorial: ");
+				printf("%s",milista->editorial);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Idioma: ");
+				printf("%s",milista->idioma);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Dia: ");
+				printf("%d",milista->dia);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Mes: ");
+				printf("%d",milista->mes);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Año: ");
+				printf("%d",milista->anio);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Cantidad: ");
+				printf("%d",milista->cantidadDeEjemplares);
+				printf("\n");
+				printf("************************************************");
+				printf("\n");
+				printf("Estado: ");
+				printf("%s", milista->estado);
+				printf("\n");
+			}
+		milista=milista->siguiente;
+		}
 }
 
 int comprobarIndice(lista milista, int indice){//si el indice coincide con el que el usuario ingresa 
@@ -444,9 +664,9 @@ void imprimirMenu() {
 }
 
 int main() {
-	int indice=0,indiceAModificar,cambiarprecio,indicelibro,indiceAEliminar,opcionBuscar;
+	int indice=0,indiceAModificar,cambiarprecio,indicelibro,indiceAEliminar,opcionBuscar,buscarPrecioDesde,buscarPrecioHasta;
 	int m = 0,guardarnum=0,npaginas=0,Dia,Mes,Anio,Precio=0,Cantidad=0,dia,mes,anio, cantidadEnInventario;
-	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7],nPaginas[20], precio[20], cantidad[20],buscartitulo[20];
+	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7],nPaginas[20], precio[20], cantidad[20],buscartitulo[20],buscarautor[20],buscarestado[20];
 	
 	lista inventario;//esta lista es importante ya que ser� la cabeza global, para enviarse como parametro a las funciones
 	inventario = NULL;//setea la cabeza
@@ -563,7 +783,7 @@ int main() {
 						scanf("%d",&mes);
 						fflush(stdin);
 						printf("\n");
-						printf("ingrese año de publicacion: ");
+						printf("ingrese a�o de publicacion: ");
 						scanf("%d",&anio);
 						fflush(stdin);
 						printf("\n");
@@ -665,35 +885,40 @@ int main() {
 					}
 			break;
 		case 2: system("cls");
-				mostrarLibroCompleto(inventario);
-				printf("\n");
-				printf("seleccione el indice del libro que desea modificar ");
-				scanf("%d",&indicelibro);
-				if(comprobarIndice(inventario,indicelibro)==1){
-					printf("Que desea modificar: (1) cantidad de existencia (2)precio unitario");
+				if(inventario==NULL){
+					printf("lista vacia");
+				}else{
+					mostrarParteDeLibro(inventario);
 					printf("\n");
-					scanf("%d",&indiceAModificar);
-					if(indiceAModificar==1){	
-						printf("ingrese nueva cantidad en inventario");
+					printf("seleccione el indice del libro que desea modificar ");
+					scanf("%d",&indicelibro);
+					if(comprobarIndice(inventario,indicelibro)==1){
+						printf("Que desea modificar: (1) cantidad de existencia (2)precio unitario");
 						printf("\n");
-						scanf("%d",&cantidadEnInventario);
-						editarLibroCantidad(inventario,cantidadEnInventario,indicelibro);
-						printf("cantidad actualizado.");
-					}else if(indiceAModificar==2){
-							printf("ingrese nuevo precio unitario");
+						scanf("%d",&indiceAModificar);
+						if(indiceAModificar==1){	
+							printf("ingrese nueva cantidad en inventario");
 							printf("\n");
-							scanf("%d",&cambiarprecio);
-							editarLibroPrecio(inventario,cambiarprecio,indicelibro); 	
-							printf("precio actualizado.");
+							scanf("%d",&cantidadEnInventario);
+							editarLibroCantidad(inventario,cantidadEnInventario,indicelibro);
+							printf("cantidad actualizado.");
+						}else if(indiceAModificar==2){
+								printf("ingrese nuevo precio unitario");
+								printf("\n");
+								scanf("%d",&cambiarprecio);
+								editarLibroPrecio(inventario,cambiarprecio,indicelibro); 	
+								printf("precio actualizado.");
+						}
+					}else if (comprobarIndice(inventario,indicelibro)==0) {
+						printf("no existe el libro indicado");
 					}
-				}else if (comprobarIndice(inventario,indicelibro)==0) {
-					printf("no existe el libro indicado");
 				}
 		break;
 		
 		case 3: system("cls");
-				mostrarParaEliminar(inventario);
-				if(inventario!=NULL){
+				if(inventario==NULL){
+					printf("lista vacia");
+				}else{
 					printf("\n");
 					printf("(Solo se muestran los libros que se pueden eliminar)\n");
 					printf("Que libro desea eliminar? Ingrese el indice: ");
@@ -704,8 +929,6 @@ int main() {
 					}else{
 						printf("no existe el libro");
 					}
-				}else{
-					printf("lista vacia");
 				}
 		break;
 		
@@ -721,21 +944,66 @@ int main() {
 				scanf("%d",&opcionBuscar);
 				switch(opcionBuscar){
 					case 1: system ("cls");
-							printf("ingrese el titulo que desea buscar: ");
-							scanf("%s",&buscartitulo);
-							fflush(stdin);
-							buscarTitulo(inventario,buscartitulo);		
+							if(inventario==NULL){
+								printf("lista vacia");
+							}else{
+								printf("ingrese el titulo que desea buscar: ");
+								fflush(stdin);
+								scanf("%[^\n]",&buscartitulo);
+								fflush(stdin);
+								buscarTitulo(inventario,buscartitulo);
+							}	
+					break;	
+					case 2: system("cls");
+								if(inventario==NULL){
+							printf("lista vacia");
+							}else{
+								printf("ingrese el autor que desea buscar: ");
+								fflush(stdin);
+								scanf("%[^\n]",&buscarautor);
+								fflush(stdin);
+								buscarAutor(inventario,buscarautor);
+							}
+
+					break;
+					case 3: system("cls");
+							if(inventario==NULL){
+								printf("lista vacia");
+							}else{
+								printf("ingrese el estado que desea buscar 'nuevo' o 'usado': ");
+								fflush(stdin);
+								scanf("%[^\n]",&buscarestado);
+								fflush(stdin);
+								buscarEstado(inventario,buscarestado);
+							}
+							
+					break;
+					case 4: system("cls");
+							if(inventario==NULL){
+								printf("lista vacia");
+							}else{
+								printf("ingrese el rango de precios: ");
+								printf("\n");
+								printf("precio desde: ");
+								scanf("%d",&buscarPrecioDesde);
+								fflush(stdin);
+								printf("precio hasta: ");
+								scanf("%d",&buscarPrecioHasta);
+								fflush(stdin);
+								buscarPrecio(inventario,buscarPrecioDesde,buscarPrecioHasta);
+							}
+					 
 					break;
 				}
+	case 5:break;
+	case 6:break;
+	case 7: break;
+	case 8: break;
+	case 9: 
+			system("cls");
+			return 0;
+	break;
 				
-		break;
-		case 5: break;
-		case 6: break;
-		case 7: break;
-		case 8: break;
-		case 9: system("cls");
-				return 0;
-				break;
 	}
 			printf("\n");
 		  	printf("ingrese el numero 10 para volver al menu principal: ");
