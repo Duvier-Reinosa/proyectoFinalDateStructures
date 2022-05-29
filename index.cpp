@@ -20,9 +20,18 @@ typedef struct nodo{
 	struct nodo *siguiente;
 }nodoL;
 
+typedef struct nodo2{
+	int indiceVenta;
+	int indiceLibro:
+	int cantidadDeLibro;
+	int precio;
+	struct nodo2 *siguiente;
+};nodoF;
+
+typedef nodoF *factura;
 typedef nodoL *lista;
 
-int venderLibro(){
+int agregarACarrito(lista inventario, factura carrito, int indiceLibroParaCarrito){
 	
 }
 
@@ -284,8 +293,15 @@ int main() {
 	int m = 0,nPaginas,precio,cantidadDeEjemplares,guardarnum=0,dia,mes,anio;
 	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7];
 	
+	int indiceLibroParaCarrito;
+	
 	lista inventario;//esta lista es importante ya que ser� la cabeza global, para enviarse como parametro a las funciones
 	inventario = NULL;//setea la cabeza
+	
+	factura carrito;
+	carrito = NULL;
+	
+	
 	while(m != 9){
 		system("cls");
 		imprimirMenu();
@@ -460,6 +476,12 @@ int main() {
 				}else{
 					printf("no existe el libro indicado");
 				}
+		break;
+		case 5:	system("cls");
+				mostrarParteDeLibro(inventario);
+				scanf("%d", &indiceLibroParaCarrito);
+				agregarACarrito(&inventario, &carrito,indiceLibroParaCarrito);
+			
 		break;
 		
 	}
