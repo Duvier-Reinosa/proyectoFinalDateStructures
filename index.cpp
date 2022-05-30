@@ -21,19 +21,20 @@ typedef struct nodo{
 }nodoL;
 
 typedef struct nodo2{
-	int indiceVenta;
-	int indiceLibro:
+	int documento;
+	char nombreComprador[40];
+	int telefono;
+	int numeroDeFactura;
+	int indiceLibro;
 	int cantidadDeLibro;
 	int precio;
+	struct nodo *libros;
 	struct nodo2 *siguiente;
-};nodoF;
+}nodoF;
 
 typedef nodoF *factura;
 typedef nodoL *lista;
 
-int agregarACarrito(lista inventario, factura carrito, int indiceLibroParaCarrito){
-	
-}
 
 
 //funcion para validar si ya hay datos iguales
@@ -76,12 +77,12 @@ int comprobarEstado(lista milista,char titulo[], char autor[], char generoLitera
 
 int validarFecha(int dia, int mes, int anio){//vallida fecha 
 	int fecha_correcta=0;
-	if(mes>=1 && mes<=12 && dia>=1 && dia <=31 && anio<=aactual){//si el mes esta entre 1 y 12, y ademas, aÃ±o no supera al actual
+	if(mes>=1 && mes<=12 && dia>=1 && dia <=31 && anio<=aactual){//si el mes esta entre 1 y 12, y ademas, año no supera al actual
 		switch (mes)
 		{
 		case 1: fecha_correcta=1;
 		break;
-		case 2: if(anio % 4 ==0 && anio % 100 !=0 || anio%400 ==0){//caso de aÃ±o bisiesto
+		case 2: if(anio % 4 ==0 && anio % 100 !=0 || anio%400 ==0){//caso de año bisiesto
 					if(dia>=1 && dia <=29)//si es bisiesto, febrero tendra 29 dias
 						fecha_correcta=1;
 				}else if(dia>=1 && dia<=28)//si no es bisiesto, febrero tendra 28 dias
@@ -117,7 +118,7 @@ int validarFecha(int dia, int mes, int anio){//vallida fecha
 
 void insertarLibro(lista *list,int indice,char *titulo,char *autor, char *generoLiterario, int nPaginas, char *editorial, char *idioma,int dia,int mes,int anio, char *estado, int precio, int cantidadDeEjemplares){
 //	Nota 1: No puede haber libros repetidos con el mismo estado(nuevo o usado).
-//	Nota 2: Las fechas deben estar validadas en el formato dï¿½a/mes/aï¿½o
+//	Nota 2: Las fechas deben estar validadas en el formato d?a/mes/a?o
 		lista nodo; //crea nodo para enlazar
 		nodo=(lista)malloc(sizeof(nodoL));// reserve memoria para ese nodo
 		nodo->indice=indice;
@@ -217,7 +218,7 @@ void mostrarLibroCompleto(lista milista){//muestra libro completo
 			printf("\n");
 			printf("************************************************");
 			printf("\n");
-			printf("AÃ±o: ");
+			printf("Año: ");
 			printf("%d",milista->anio);
 			printf("\n");
 			printf("************************************************");
@@ -336,7 +337,7 @@ void buscarTitulo(lista milista,char buscarTitulo[]){//muestra libro por titulo
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("AÃ±o: ");
+				printf("Año: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -410,7 +411,7 @@ void buscarAutor(lista milista,char buscarAutor[]){//muestra libro por titulo
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("AÃ±o: ");
+				printf("Año: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -489,7 +490,7 @@ void buscarEstado(lista milista,char buscarEstado[]){//muestra libro estdo (nuev
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("AÃ±o: ");
+				printf("Año: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -562,7 +563,7 @@ void buscarPrecio(lista milista,int buscarPrecioDesde,int buscarPrecioHasta){//m
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("AÃ±o: ");
+				printf("Año: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -657,6 +658,113 @@ void eliminarLibro(lista *milista){//funcion para eliminar libro con existencia 
 	}
 	
 }
+
+
+int verificarExistenciaFactura(factura carrito, int numFactura){
+	while(carrito != NULL){
+		if(carrito->numeroDeFactura == numFactura){
+			return 1;
+		}
+		carrito = carrito->siguiente;
+	}
+	return 0;
+}
+
+void insertarFactura(factura *carrito, factura newNodo){	
+	newNodo->siguiente =  *carrito; //apunta a la cabeza de la lista	
+	*carrito = newNodo; // milista recupera la cabeza
+}
+
+void insertarLibroEnFactura(factura carrito, lista libro, int numFactura){
+	while(carrito != NULL){
+		if(carrito->numeroDeFactura == numFactura){
+			while(carrito->libros != NULL){
+				if(carrito->libros->siguiente == NULL){
+					libro->siguiente = NULL;
+					carrito->libros->siguiente = libro;
+				}
+				carrito->libros = carrito->libros->siguiente;
+			}
+		}
+	}
+}
+
+lista buscarStock(int indice, lista inventario, int cantidad){
+	while(inventario != NULL){
+		if(inventario->indice == indice){
+			if(inventario->cantidadDeEjemplares > 0 && inventario->cantidadDeEjemplares > cantidad){
+				inventario->cantidadDeEjemplares = inventario->cantidadDeEjemplares - cantidad;
+				return inventario;
+			}else{
+				return NULL;
+			}
+		}
+		inventario = inventario->siguiente;//para modificar valores
+	}
+}
+
+void agregarACarrito(lista inventario, factura *carrito, int indiceLibroParaCarrito){
+	int cantidad = 0;
+	printf("Ingrese cantidad");
+	while(cantidad == 0){
+		scanf("%d", &cantidad);
+		if(cantidad < 0 || cantidad > 5){
+			cantidad = 0;
+			printf("\n Cantidad incorrecta!");	
+		}
+	}
+	
+	lista libro = buscarStock(indiceLibroParaCarrito, inventario, cantidad);
+	if(libro == NULL){
+		printf("Este libro no tiene stock");
+	}else {
+		int numFactura; 
+		int documentoPersona;
+		char nombreComprador[40];
+		int telefono;
+		printf("\nIngrese el número de factura al que quiere asociar la venta de este libro");
+		scanf("%d", &numFactura);
+		if(verificarExistenciaFactura(*carrito, numFactura) == 1){
+			insertarLibroEnFactura(*carrito, libro, numFactura);
+		} else {
+			printf("Ingrese el documento del comprador");
+			scanf("%d", &documentoPersona);
+			printf("Ingrese el nombre del comprador");
+			scanf("%s", &nombreComprador);
+			printf("Ingrese el telefono del comprador");
+			scanf("%d", &telefono);
+			factura nodoFactura; //crea nodo para enlazar
+			nodoFactura->indiceLibro = libro->indice;
+			nodoFactura->cantidadDeLibro = 1;
+			nodoFactura->precio = libro->precio;
+			nodoFactura->documento = documentoPersona;
+			nodoFactura->libros = libro;
+			insertarFactura(carrito, nodoFactura);
+		};	
+	}
+}
+
+void imprimirFactura(factura carrito, int numFactura){
+	int total = 0;
+	while(carrito != NULL){
+		if(carrito->numeroDeFactura == numFactura){
+			printf("Numero de factura: %s", carrito->numeroDeFactura);
+			printf("Nombre del comprador: %s", carrito->nombreComprador);
+			printf("Numero de documento: %s", carrito->documento);
+			printf("Numero de Telefono: %s", carrito->telefono);
+			while(carrito->libros != NULL){
+				printf("Nombre de libro: %s", carrito->libros->titulo);
+				printf("Autor del libro: %s", carrito->libros->autor);
+				printf("Precio del libro: %s", carrito->libros->precio);
+				total = total + carrito->libros->precio;
+				carrito->libros = carrito->libros->siguiente;
+			}
+			printf("Total a pagar: ", total);
+		}
+		carrito = carrito->siguiente;
+	}
+}
+
 void imprimirMenu() {
 	
 	printf("****************SISTEMA DE VENTA DE LIBROS**************\n\n");
@@ -672,12 +780,14 @@ void imprimirMenu() {
 	printf("9. Salir\n");
 }
 
+
 int main() {
 	int indice=0,indiceAModificar,cambiarprecio,indicelibro,indiceAEliminar,opcionBuscar,buscarPrecioDesde,buscarPrecioHasta;
 	int m = 0,guardarnum=0,npaginas=0,Dia,Mes,Anio,Precio=0,Cantidad=0,dia,mes,anio, cantidadEnInventario;
 	char titulo[20],autor[20],generoLiterario[20],editorial[20],idioma[20],estado[7],nPaginas[20], precio[20], cantidad[20],buscartitulo[20],buscarautor[20],buscarestado[20];
 	
 	int indiceLibroParaCarrito;
+	int numDeFacturaAImprimir;
 	
 	lista inventario;//esta lista es importante ya que serï¿½ la cabeza global, para enviarse como parametro a las funciones
 	inventario = NULL;//setea la cabeza
@@ -946,14 +1056,7 @@ int main() {
 						printf("no existe el libro");
 					}
 				}
-		break;
-		case 5:	system("cls");
-				mostrarParteDeLibro(inventario);
-				scanf("%d", &indiceLibroParaCarrito);
-				agregarACarrito(&inventario, &carrito,indiceLibroParaCarrito);
-			
-		break;
-		
+		break;		
 		case 4: system("cls");
 				printf("Como desea  buscar?");
 				printf("\n");
@@ -1017,10 +1120,28 @@ int main() {
 					 
 					break;
 				}
-	case 5:break;
+	case 5:	system("cls");
+				mostrarParteDeLibro(inventario);
+				if(inventario == NULL){
+					printf("\nNo hay Inventario!\n");
+				} else { 
+					printf("\nIngre el indice del libro a vender: ");
+					scanf("%d", &indiceLibroParaCarrito);
+					agregarACarrito(inventario, &carrito,indiceLibroParaCarrito);
+				}
+		break;
 	case 6:break;
 	case 7: break;
-	case 8: break;
+	case 8:
+		system("cls");
+		if(carrito == NULL){
+			printf("\nNo hay facturas para imprimir!\n");
+		} else {
+			printf("Ingrese el numero de factura a imprimir");
+			scanf("%d", numDeFacturaAImprimir);
+			imprimirFactura(carrito, numDeFacturaAImprimir);
+		}
+		break;
 	case 9: 
 			system("cls");
 			return 0;
