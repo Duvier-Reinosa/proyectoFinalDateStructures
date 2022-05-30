@@ -25,7 +25,6 @@ typedef struct nodo2{
 	char nombreComprador[40];
 	int telefono;
 	int numeroDeFactura;
-	int indiceLibro;
 	int cantidadDeLibro;
 	int precio;
 	struct nodo *libros;
@@ -734,7 +733,6 @@ void agregarACarrito(lista inventario, factura *carrito, int indiceLibroParaCarr
 			printf("Ingrese el telefono del comprador");
 			scanf("%d", &telefono);
 			factura nodoFactura; //crea nodo para enlazar
-			nodoFactura->indiceLibro = libro->indice;
 			nodoFactura->cantidadDeLibro = 1;
 			nodoFactura->precio = libro->precio;
 			nodoFactura->documento = documentoPersona;
