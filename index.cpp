@@ -25,14 +25,21 @@ typedef struct nodo2{
 	char nombreComprador[40];
 	int telefono;
 	int numeroDeFactura;
-	int cantidadDeLibro;
 	int precio;
-	struct nodo *libros;
 	struct nodo2 *siguiente;
 }nodoF;
 
+typedef struct nodo3{
+	int indiceFactura;
+	char titulo[20];
+	char autor[20];
+	int precio;
+	struct nodo3 *siguiente;
+}nodoZ;
+
 typedef nodoF *factura;
 typedef nodoL *lista;
+typedef nodoZ *listaDeCarrito;
 
 
 
@@ -658,6 +665,36 @@ void eliminarLibro(lista *milista){//funcion para eliminar libro con existencia 
 	
 }
 
+void imprimirFactura(factura carrito, listaDeCarrito librosCarrito, int numFactura){
+	int total = 0;
+	if(carrito == NULL){
+		printf("Vacio");
+	}
+	while(carrito != NULL){
+		if(carrito->numeroDeFactura == numFactura){
+			printf("\nNumero de factura: %d", &carrito->numeroDeFactura);
+			printf("\nNombre del comprador: %s", carrito->nombreComprador);
+			printf("\nNumero de documento: %d", carrito->documento);
+			printf("\nNumero de Telefono: %d", carrito->telefono);
+			printf("\nLibros\n");
+			while(librosCarrito != NULL){
+				printf("\nNombre de libro: %s", librosCarrito->titulo);
+				printf("\nAutor del libro: %s", librosCarrito->autor);
+				printf("\nPrecio del libro: $%d\n", librosCarrito->precio);
+				total = total + librosCarrito->precio;
+				librosCarrito = librosCarrito->siguiente;
+			}
+			if(total > 200000){
+				printf("\nSubTotal a pagar: $%d", total);
+				printf("\nTotal a pagar con descuento del 15%: $%d", total - (total * 15 / 100));
+			} else {
+				printf("\nTotal a pagar: $%d", total);
+			}
+		}
+		carrito = carrito->siguiente;
+	}
+}
+
 
 int verificarExistenciaFactura(factura carrito, int numFactura){
 	while(carrito != NULL){
@@ -669,29 +706,72 @@ int verificarExistenciaFactura(factura carrito, int numFactura){
 	return 0;
 }
 
-void insertarFactura(factura *carrito, factura newNodo){	
-	newNodo->siguiente =  *carrito; //apunta a la cabeza de la lista	
-	*carrito = newNodo; // milista recupera la cabeza
+void insertarFactura(factura *carrito, listaDeCarrito *librosCarrito,  lista libro, int numFactura, int cantidad){
+	int documentoPersona;
+	char nombreComprador[40];
+	int telefono;
+	factura nodoFactura; //crea nodo para enlazar
+	nodoFactura=(factura)malloc(sizeof(nodoF));// reserve memoria para ese nodo
+	
+	printf("Ingrese el documento del comprador");
+	scanf("%d", &documentoPersona);
+	printf("Ingrese el nombre del comprador");
+	scanf("%s", &nombreComprador);
+	printf("Ingrese el telefono del comprador");
+	scanf("%d", &telefono);
+	
+	libro->siguiente == NULL;
+	strcpy(nodoFactura->nombreComprador,nombreComprador);
+	nodoFactura->documento = documentoPersona;
+	nodoFactura->telefono = telefono;
+	nodoFactura->numeroDeFactura = numFactura;
+	nodoFactura->precio = libro->precio;
+	nodoFactura->documento = documentoPersona;
+	
+	if(cantidad - 1 == 0){
+		listaDeCarrito nodoLibro = (listaDeCarrito)malloc(sizeof(nodoZ));// reserve memoria para ese nodo
+		
+		nodoLibro->indiceFactura = numFactura;
+		strcpy(nodoLibro->titulo, libro->titulo);
+		strcpy(nodoLibro->autor, libro->autor);
+		nodoLibro->precio = libro->precio;
+		
+		nodoLibro->siguiente = *librosCarrito;
+		*librosCarrito = nodoLibro;
+	} else {
+		while(cantidad - 1 != 0){
+			listaDeCarrito nodoLibro = (listaDeCarrito)malloc(sizeof(nodoZ));// reserve memoria para ese nodo
+		
+			nodoLibro->indiceFactura = numFactura;
+			strcpy(nodoLibro->titulo, libro->titulo);
+			strcpy(nodoLibro->autor, libro->autor);
+			nodoLibro->precio = libro->precio;
+		
+			nodoLibro->siguiente = *librosCarrito;
+			*librosCarrito = nodoLibro;
+			cantidad--;
+		}	
+	}
+	nodoFactura->siguiente =  *carrito; //apunta a la cabeza de la lista	
+	*carrito = nodoFactura; // milista recupera la cabeza
 }
 
-void insertarLibroEnFactura(factura carrito, lista libro, int numFactura){
-	while(carrito != NULL){
-		if(carrito->numeroDeFactura == numFactura){
-			while(carrito->libros != NULL){
-				if(carrito->libros->siguiente == NULL){
-					libro->siguiente = NULL;
-					carrito->libros->siguiente = libro;
-				}
-				carrito->libros = carrito->libros->siguiente;
-			}
-		}
-	}
+void insertarLibroEnFactura(lista libro, int numFactura, listaDeCarrito *librosCarrito){
+	listaDeCarrito nodoLibro = (listaDeCarrito)malloc(sizeof(nodoZ));// reserve memoria para ese nodo
+		
+	nodoLibro->indiceFactura = numFactura;
+	strcpy(nodoLibro->titulo, libro->titulo);
+	strcpy(nodoLibro->autor, libro->autor);
+	nodoLibro->precio = libro->precio;
+		
+	nodoLibro->siguiente = *librosCarrito;
+	*librosCarrito = nodoLibro;
 }
 
 lista buscarStock(int indice, lista inventario, int cantidad){
 	while(inventario != NULL){
 		if(inventario->indice == indice){
-			if(inventario->cantidadDeEjemplares > 0 && inventario->cantidadDeEjemplares > cantidad){
+			if(inventario->cantidadDeEjemplares > 0 && inventario->cantidadDeEjemplares >= cantidad){
 				inventario->cantidadDeEjemplares = inventario->cantidadDeEjemplares - cantidad;
 				return inventario;
 			}else{
@@ -702,62 +782,97 @@ lista buscarStock(int indice, lista inventario, int cantidad){
 	}
 }
 
-void agregarACarrito(lista inventario, factura *carrito, int indiceLibroParaCarrito){
-	int cantidad = 0;
-	printf("Ingrese cantidad");
-	while(cantidad == 0){
-		scanf("%d", &cantidad);
-		if(cantidad < 0 || cantidad > 5){
-			cantidad = 0;
-			printf("\n Cantidad incorrecta!");	
+void regresarCantidadLibros(lista inventario, char titulo[]){
+	while(inventario != NULL){
+		if(inventario->titulo == titulo){
+			inventario->cantidadDeEjemplares += 1; 
 		}
-	}
-	
-	lista libro = buscarStock(indiceLibroParaCarrito, inventario, cantidad);
-	if(libro == NULL){
-		printf("Este libro no tiene stock");
-	}else {
-		int numFactura; 
-		int documentoPersona;
-		char nombreComprador[40];
-		int telefono;
-		printf("\nIngrese el número de factura al que quiere asociar la venta de este libro");
-		scanf("%d", &numFactura);
-		if(verificarExistenciaFactura(*carrito, numFactura) == 1){
-			insertarLibroEnFactura(*carrito, libro, numFactura);
-		} else {
-			printf("Ingrese el documento del comprador");
-			scanf("%d", &documentoPersona);
-			printf("Ingrese el nombre del comprador");
-			scanf("%s", &nombreComprador);
-			printf("Ingrese el telefono del comprador");
-			scanf("%d", &telefono);
-			factura nodoFactura; //crea nodo para enlazar
-			nodoFactura->cantidadDeLibro = 1;
-			nodoFactura->precio = libro->precio;
-			nodoFactura->documento = documentoPersona;
-			nodoFactura->libros = libro;
-			insertarFactura(carrito, nodoFactura);
-		};	
+		inventario = inventario->siguiente;
 	}
 }
 
-void imprimirFactura(factura carrito, int numFactura){
-	int total = 0;
+void eliminarVenta(factura *carrito, listaDeCarrito *librosCarrito, lista *inventario, int numFactura){
+	listaDeCarrito anterior = NULL;
+	listaDeCarrito primero = *librosCarrito;
+	listaDeCarrito actual = primero;
+
+	if(primero!=NULL){
+		while(actual != NULL){
+			if(actual->indiceFactura == numFactura){
+				if(anterior != NULL){
+					anterior = actual;
+					anterior->siguiente = actual->siguiente;
+				}
+				regresarCantidadLibros(*inventario, actual->titulo);
+				free(actual);
+				
+			}
+			anterior = actual;
+			actual=actual->siguiente;
+		}
+	}else{
+		printf("Lista vacia");
+	}
+	
+	factura anterior2 = NULL;
+	factura primero2 = *carrito;
+	factura actual2 = primero2;
+
+	if(primero2 != NULL){
+		while(actual2 != NULL){
+			if(actual2->numeroDeFactura == numFactura){
+				if(anterior2 != NULL){
+					anterior2 = actual2;
+					anterior2->siguiente = actual2->siguiente;
+				}
+				free(actual2);
+				
+			}
+			anterior2 = actual2;
+			actual2=actual2->siguiente;
+		}
+	}else{
+		printf("Lista vacia");
+	}
+}
+
+void editarVenta(int numFactura, factura carrito){
 	while(carrito != NULL){
 		if(carrito->numeroDeFactura == numFactura){
-			printf("Numero de factura: %s", carrito->numeroDeFactura);
-			printf("Nombre del comprador: %s", carrito->nombreComprador);
-			printf("Numero de documento: %s", carrito->documento);
-			printf("Numero de Telefono: %s", carrito->telefono);
-			while(carrito->libros != NULL){
-				printf("Nombre de libro: %s", carrito->libros->titulo);
-				printf("Autor del libro: %s", carrito->libros->autor);
-				printf("Precio del libro: %s", carrito->libros->precio);
-				total = total + carrito->libros->precio;
-				carrito->libros = carrito->libros->siguiente;
+			int editar = 0; 
+			
+			printf("\n Quieres editar el nombre del comprador? 1. si  2. No");
+			scanf("%d", &editar);
+			if(editar == 1){
+				char newComprador[40];
+				printf("\nIngrese nuevo nombre del comprador");
+				scanf("%s", &newComprador);
+				strcpy(carrito->nombreComprador, newComprador);
+			}else {
+				editar = 0;
 			}
-			printf("Total a pagar: ", total);
+			
+			printf("\n Quieres editar el documento del comprador? 1. si  2. No");
+			scanf("%d", &editar);
+			if(editar == 1){
+				int numComprador;
+				printf("\nIngrese nuevo nombre del comprador");
+				scanf("%d", &numComprador);
+				carrito->documento = numComprador;
+			}else {
+				editar = 0;
+			}
+			
+			printf("\n Quieres editar el telefono del comprador? 1. si  2. No");
+			scanf("%d", &editar);
+			if(editar == 1){
+				int newTelefono;
+				printf("\nIngrese nuevo numero de telefono del comprador");
+				scanf("%d", &newTelefono);
+				carrito->telefono = newTelefono;
+			}else {
+				editar = 0;
+			}
 		}
 		carrito = carrito->siguiente;
 	}
@@ -792,6 +907,9 @@ int main() {
 	
 	factura carrito;
 	carrito = NULL;
+	
+	listaDeCarrito librosCarrito;
+	librosCarrito = NULL;
 	
 	
 	while(m != 9){
@@ -1125,19 +1243,55 @@ int main() {
 				} else { 
 					printf("\nIngre el indice del libro a vender: ");
 					scanf("%d", &indiceLibroParaCarrito);
-					agregarACarrito(inventario, &carrito,indiceLibroParaCarrito);
+					int cantidad = 0;
+					lista libro = buscarStock(indiceLibroParaCarrito, inventario, cantidad);
+					printf("Ingrese cantidad");
+					while(cantidad == 0){
+						scanf("%d", &cantidad);
+						if((cantidad < 0 || cantidad > 5) && libro->cantidadDeEjemplares >= cantidad){
+							cantidad = 0;
+							printf("\n Cantidad incorrecta!");	
+						}
+					}	
+					if(libro == NULL){
+						printf("Este libro no tiene stock");
+					}else {
+						int numFactura;
+						printf("\nIngrese el número de factura al que quiere asociar la venta de este libro");
+						scanf("%d", &numFactura);
+						if(verificarExistenciaFactura(carrito, numFactura) == 1){
+							insertarLibroEnFactura(libro, numFactura, &librosCarrito);
+						} else {
+							insertarFactura(&carrito, &librosCarrito, libro, numFactura, cantidad);
+						};	
+					}
 				}
 		break;
-	case 6:break;
-	case 7: break;
+	case 6: system("cls");
+		int numFactura;
+		printf("\nIngrese el numero de factura que desea eliminar");
+		scanf("%d", &numFactura);
+		editarVenta(numFactura, carrito);
+	break;
+	case 7: system("cls");
+		int numFactura2;
+		printf("\nIngrese el numero de factura que desea eliminar");
+		scanf("%d", &numFactura);
+		if(verificarExistenciaFactura(carrito, numFactura2) == 1){
+			eliminarVenta(&carrito, &librosCarrito, &inventario, numFactura2);
+			
+		} else {
+			printf("\nEsta factura no existe");
+		};
+	break;
 	case 8:
 		system("cls");
 		if(carrito == NULL){
 			printf("\nNo hay facturas para imprimir!\n");
 		} else {
 			printf("Ingrese el numero de factura a imprimir");
-			scanf("%d", numDeFacturaAImprimir);
-			imprimirFactura(carrito, numDeFacturaAImprimir);
+			scanf("%d", &numDeFacturaAImprimir);
+			imprimirFactura(carrito, librosCarrito, numDeFacturaAImprimir);
 		}
 		break;
 	case 9: 
