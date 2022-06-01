@@ -672,7 +672,7 @@ void imprimirFactura(factura carrito, listaDeCarrito librosCarrito, int numFactu
 	}
 	while(carrito != NULL){
 		if(carrito->numeroDeFactura == numFactura){
-			printf("\nNumero de factura: %d", &carrito->numeroDeFactura);
+			printf("\nNumero de factura: %d", carrito->numeroDeFactura);
 			printf("\nNombre del comprador: %s", carrito->nombreComprador);
 			printf("\nNumero de documento: %d", carrito->documento);
 			printf("\nNumero de Telefono: %d", carrito->telefono);
@@ -1236,6 +1236,7 @@ int main() {
 					 
 					break;
 				}
+		break;
 	case 5:	system("cls");
 				mostrarParteDeLibro(inventario);
 				if(inventario == NULL){
