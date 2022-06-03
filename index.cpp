@@ -1269,14 +1269,14 @@ int main() {
 		break;
 	case 6: system("cls");
 		int numFactura;
-		printf("\nIngrese el numero de factura que desea eliminar");
+		printf("\nIngrese el numero de factura que desea editar");
 		scanf("%d", &numFactura);
 		editarVenta(numFactura, carrito);
 	break;
 	case 7: system("cls");
 		int numFactura2;
 		printf("\nIngrese el numero de factura que desea eliminar");
-		scanf("%d", &numFactura);
+		scanf("%d", &numFactura2);
 		if(verificarExistenciaFactura(carrito, numFactura2) == 1){
 			eliminarVenta(&carrito, &librosCarrito, &inventario, numFactura2);
 			
