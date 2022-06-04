@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 #define aactual 2022
-//seÃ±ores, no dejen de estudiar .. reflexionen sobre lo que les estan pidiendo
+
 typedef struct nodo{
 	int indice;
 	char titulo[20];
@@ -83,12 +83,12 @@ int comprobarEstado(lista milista,char titulo[], char autor[], char generoLitera
 
 int validarFecha(int dia, int mes, int anio){//vallida fecha 
 	int fecha_correcta=0;
-	if(mes>=1 && mes<=12 && dia>=1 && dia <=31 && anio<=aactual){//si el mes esta entre 1 y 12, y ademas, año no supera al actual
+	if(mes>=1 && mes<=12 && dia>=1 && dia <=31 && anio<=aactual){//si el mes esta entre 1 y 12, y ademas, aÃ±o no supera al actual
 		switch (mes)
 		{
 		case 1: fecha_correcta=1;
 		break;
-		case 2: if(anio % 4 ==0 && anio % 100 !=0 || anio%400 ==0){//caso de año bisiesto
+		case 2: if(anio % 4 ==0 && anio % 100 !=0 || anio%400 ==0){//caso de aÃ±o bisiesto
 					if(dia>=1 && dia <=29)//si es bisiesto, febrero tendra 29 dias
 						fecha_correcta=1;
 				}else if(dia>=1 && dia<=28)//si no es bisiesto, febrero tendra 28 dias
@@ -224,7 +224,7 @@ void mostrarLibroCompleto(lista milista){//muestra libro completo
 			printf("\n");
 			printf("************************************************");
 			printf("\n");
-			printf("Año: ");
+			printf("AÃ±o: ");
 			printf("%d",milista->anio);
 			printf("\n");
 			printf("************************************************");
@@ -343,7 +343,7 @@ void buscarTitulo(lista milista,char buscarTitulo[]){//muestra libro por titulo
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("Año: ");
+				printf("AÃ±o: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -417,7 +417,7 @@ void buscarAutor(lista milista,char buscarAutor[]){//muestra libro por titulo
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("Año: ");
+				printf("AÃ±o: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -496,7 +496,7 @@ void buscarEstado(lista milista,char buscarEstado[]){//muestra libro estdo (nuev
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("Año: ");
+				printf("AÃ±o: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -569,7 +569,7 @@ void buscarPrecio(lista milista,int buscarPrecioDesde,int buscarPrecioHasta){//m
 				printf("\n");
 				printf("************************************************");
 				printf("\n");
-				printf("Año: ");
+				printf("AÃ±o: ");
 				printf("%d",milista->anio);
 				printf("\n");
 				printf("************************************************");
@@ -902,7 +902,7 @@ int main() {
 	int indiceLibroParaCarrito;
 	int numDeFacturaAImprimir;
 	
-	lista inventario;//esta lista es importante ya que serï¿½ la cabeza global, para enviarse como parametro a las funciones
+	lista inventario;//esta lista es importante ya que serÃ¯Â¿Â½ la cabeza global, para enviarse como parametro a las funciones
 	inventario = NULL;//setea la cabeza
 	
 	factura carrito;
@@ -1025,7 +1025,7 @@ int main() {
 						scanf("%d",&mes);
 						fflush(stdin);
 						printf("\n");
-						printf("ingrese año de publicacion: ");
+						printf("ingrese aÃ±o de publicacion: ");
 						scanf("%d",&anio);
 						fflush(stdin);
 						printf("\n");
@@ -1038,7 +1038,7 @@ int main() {
 							printf("ingrese mes de publicacion: ");
 							scanf("%d",&mes);
 							printf("\n");
-							printf("ingrese aÃ±o de publicacion: ");
+							printf("ingrese aÃƒÂ±o de publicacion: ");
 							scanf("%d",&anio);
 							printf("\n");
 						}
@@ -1258,7 +1258,7 @@ int main() {
 						printf("Este libro no tiene stock");
 					}else {
 						int numFactura;
-						printf("\nIngrese el número de factura al que quiere asociar la venta de este libro");
+						printf("\nIngrese el nÃºmero de factura al que quiere asociar la venta de este libro");
 						scanf("%d", &numFactura);
 						if(verificarExistenciaFactura(carrito, numFactura) == 1){
 							insertarLibroEnFactura(libro, numFactura, &librosCarrito);
